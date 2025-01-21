@@ -79,11 +79,7 @@ router.post('/sign-up', validateSignUp, async(req, res, next) => {
     })
 })
 
-router.post('/login', signJWT, passport.authenticate('jwt', { session: false, successRedirect: '/test' }))
-
-router.get('/test', (req, res) => {
-    res.send('TEST ROUTE')
-});
+router.post('/login', signJWT, passport.authenticate('jwt', { session: false}), (req, res) => res.json({status: 'successfully logged in'}))
 
 
 
