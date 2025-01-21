@@ -38,21 +38,20 @@ async function signJWT (req, res, next) {
     }
     const match = await bcrypt.compare(req.body.password, user.password)
     if(!match) {
-        const error = new Error('Incorrect username');
+        const error = new Error('Incorrect password');
         error.code = 401;
         return next(error)
     }
     jwt.sign({username: req.body.username}, process.env.TOKEN_SECRET, (err, token) => {
-        console.log(token);
         if (err) {
             return next(err);
         }
-        next();
+        res.json({token});
     })
 }
 
 const validateSignUp = [
-    body("username").trim().notEmpty().withMessage("Username must not be empty").matches(/^[a-zA-Z0-9_]+$/).withMessage("Username must only contain alphabet and numbers and no spaces").isLength({min: 3, max: 20}).withMessage("Password must be between 3 and 20 characters"),
+    body("username").trim().notEmpty().withMessage("Username must not be empty").matches(/^[a-zA-Z0-9_]+$/).withMessage("Username must only contain alphabet and numbers and no spaces").isLength({min: 3, max: 20}).withMessage("Username must be between 3 and 20 characters"),
     body("password").trim().notEmpty().withMessage("Password must not be empty").isLength({min: 6}).withMessage("Password must be atleast 6 characters long"),
     body('confirm_password').custom((value, { req }) => {
         return value === req.body.password;
@@ -72,14 +71,17 @@ router.post('/sign-up', validateSignUp, async(req, res, next) => {
         }
         try {
             const user = await db.createUser(req.body.username, hash);
-            res.json(user);
+            res.json({
+                username: user.username,
+                isAdmin: user.isAdmin
+            });
         } catch (error) {
             return next(error);
         }
     })
 })
 
-router.post('/login', signJWT, passport.authenticate('jwt', { session: false}), (req, res) => res.json({status: 'successfully logged in'}))
+router.post('/login', signJWT)
 
 
 
