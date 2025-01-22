@@ -1,5 +1,7 @@
-import { useState } from "react"
+import { useState } from "react";
+import { useNavigate } from "react-router";
 export default function Login () {
+    let navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -27,6 +29,7 @@ export default function Login () {
             }
             setError(" ");
             localStorage.setItem("cred", response.token);
+            navigate('/')
             console.log(response);
         } catch(err) {
             setError(err.message)

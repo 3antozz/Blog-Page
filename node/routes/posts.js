@@ -2,18 +2,10 @@ const { Router } = require('express');
 const fn = require('./fn');
 const asyncHandler = require('express-async-handler');
 const db = require('../db/queries');
+const passport = require('passport');
 
 
 const router = Router();
-
-router.get('/api', asyncHandler((req, res) => {
-    if(req.user) {
-        console.log(req.user);
-        return res.json({status: 'you are logged in!'})
-    } else {
-        return res.json({status: 'you are NOT LOGGED IN'})
-    }
-}))
 
 router.get('/', asyncHandler(async(req, res) => {
     const posts = await db.getAllPosts();
@@ -25,6 +17,13 @@ router.get('/:postId', asyncHandler(async(req, res) => {
     const post = await db.getPost(+postId);
     return res.json({post});
 }))
+
+// PROTECTED ROUTES
+//---------------------------------------------------------------------------------
+
+router.use((req, res, next) => {
+    passport.authenticate('jwt', { session: false })(req, res, next);
+})
 
 router.post('/', fn.checkAdmin, asyncHandler(async(req, res) => {
     const { title, cover_url, content } = req.body;

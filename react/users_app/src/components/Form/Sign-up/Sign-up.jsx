@@ -44,7 +44,7 @@ export default function SignUp () {
 
     return (
         <form onSubmit={handleSubmit}>
-            { errors && errors.map((error, index) => <p key={index}>{error}</p>) }
+            { errors && errors.map((error, index) => <li key={index}>{error}</li>) }
             <div>
                 <label htmlFor="username">Username</label>
                 <input type="text" id="username" onChange={handleUsername} value={username} />

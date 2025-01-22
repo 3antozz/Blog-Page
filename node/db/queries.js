@@ -27,7 +27,6 @@ exports.getAllPosts = async() => {
                     username: true
                 }
             },
-            comments: true
         }
     })
 }
@@ -43,12 +42,20 @@ exports.getPost = async(id) => {
                     username: true
                 }
             },
-            comments: true
+            comments: {
+                include: {
+                    author: {
+                        select: {
+                            username: true
+                        }
+                    }
+                }
+            }
         }
     })
 }
 
-exports.createPost = async(authorId, title, published = false, cover_url = '/images/no-image.jpg', content = "" ) => {
+exports.createPost = async(authorId, title, published = false, cover_url = null, content = "" ) => {
     return await prisma.post.create({
         data: {
             title,

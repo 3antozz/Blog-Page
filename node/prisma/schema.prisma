@@ -27,7 +27,7 @@ model Post {
     id            Int       @id @default(autoincrement())
     title         String
     published     Boolean   @default(false)
-    cover_url     String    
+    cover_url     String?    
     content       String
     creationDate  DateTime  @default(now()) 
     author        User      @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)

@@ -70,11 +70,8 @@ router.post('/sign-up', validateSignUp, async(req, res, next) => {
             return next(err)
         }
         try {
-            const user = await db.createUser(req.body.username, hash);
-            res.json({
-                username: user.username,
-                isAdmin: user.isAdmin
-            });
+            await db.createUser(req.body.username, hash);
+            res.json({status: 'Success'});
         } catch (error) {
             return next(error);
         }

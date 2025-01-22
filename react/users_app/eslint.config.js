@@ -9,5 +9,5 @@ export default [
   {languageOptions: { globals: globals.browser }},
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,
-  pluginReact.configs["jsx-runtime"],
+  pluginReact.configs.flat["jsx-runtime"],
 ];
