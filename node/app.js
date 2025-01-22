@@ -1,7 +1,6 @@
 const express = require('express');
 const router = require('./routes');
 const path = require('node:path');
-const passport = require('passport')
 var cors = require('cors')
 
 
@@ -11,13 +10,7 @@ app.options('*', cors())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-// app.use((req, res, next) => {
-//     const openRoute = ['/login', '/sign-up', /^\/posts\/\d+$/];
-//     if (openRoute.includes(req.path)) {
-//         return next();
-//     }
-//     passport.authenticate('jwt', { session: false})(req, res, next);
-// })
+
 app.use('/', router);
 app.use((req, res, next) => {
     const error = new Error('404 Not Found')
@@ -33,6 +26,12 @@ app.use((error, req, res, next) => {
         return res.status(error.code || 500).json({
             errors: error,
             code: error.code || 500
+        });
+    }
+    if (error.code === 'P2025') {
+        return res.status(400).json({
+            message: "Post doesn't exist",
+            code: 400
         });
     }
     if (error.code === 'P2002') {

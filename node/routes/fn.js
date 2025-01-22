@@ -1,6 +1,5 @@
 exports.checkAuth = (req, res, next) => {
     if(req.user) {
-        console.log(req.user);
         return next();
     } else {
         const error = new Error('Unauthorized Access');

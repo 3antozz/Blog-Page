@@ -1,29 +1,29 @@
 import styles from "./Posts.module.css"
-// import { PostsContext } from "../../App"
-// import { useContext } from "react"
 import { useOutletContext } from "react-router";
 import { Link } from "react-router";
 import PropTypes from "prop-types";
 export default function Posts () {
-    // const { posts } = useContext(PostsContext);
     const { posts } = useOutletContext();
+    if (posts.length === 0) {
+        return <div>Loading posts...</div>
+    }
     return (
-        <div>
+        <>
             {posts.map((post) => <Post key={post.id} post={post}/>)}
-        </div>
+        </>
     )
 }
 
 function Post ({post}) {
     return (
-        <Link to={`/posts/${post.id}`}>
             <section className={styles.container}>
-                    <img src={post.cover_url} alt={post.title} />
-                    <h2>{post.title}</h2>
+                    <Link to={`/posts/${post.id}`}>
+                        <img src={post.cover_url} alt="" />
+                        <h2>{post.title}</h2>
+                    </Link>
                     <p>{post.author.username}</p>
                     <p>{post.creationDate}</p>
             </section>
-        </Link>
     )
 }
 

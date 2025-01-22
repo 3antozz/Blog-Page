@@ -32,7 +32,7 @@ exports.getAllPosts = async() => {
 }
 
 exports.getPost = async(id) => {
-    return await prisma.post.findUnique({
+    return await prisma.post.findUniqueOrThrow({
         where: {
             id
         },

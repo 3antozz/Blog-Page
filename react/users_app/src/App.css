@@ -1,6 +1,12 @@
-body {
+#root {
   height: 100dvh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  background-color: #1c1c1d;
+  color: white;
 }
+
+main {
+  flex: 1;
+}
+

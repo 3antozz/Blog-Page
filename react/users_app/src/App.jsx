@@ -1,24 +1,43 @@
 import { Outlet } from "react-router";
 import "./App.css";
+import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 function App() {
     const [isFetched, setFetched] = useState(false)
     const [posts, setPosts] = useState([]);
-    const [isLoggedIn, setLog] = useState(false)
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem("cred"));
+    useEffect(() => {
+        const fetchUser = async () => {
+            if(token) {
+                console.log("called");
+                try {
+                    const request = await fetch("http://localhost:3000/user", {
+                        method: 'GET',
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
+                        mode: "cors",
+                    });
+                    const response = await request.json();
+                    if (!request.ok) {
+                        setUser(null);
+                        throw new Error(response.message || 'Something went wrong');
+                    }
+                    setUser(response.user)
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+        }
+        fetchUser();
+    }, [token])
     useEffect(() => {
         if (!isFetched) {
-            const token = localStorage.getItem("cred");
-            const isLoggedIn = !!token;
-            const headers = isLoggedIn
-                ? {
-                      method: "GET",
-                      Authorization: `Bearer ${token}`,
-                  }
-                : { method: "GET" };
             const fetchPosts = async () => {
                 try {
                     const request = await fetch("http://localhost:3000/posts", {
-                        headers: headers,
+                        method: 'GET',
                         mode: "cors",
                     });
                     const response = await request.json();
@@ -26,7 +45,6 @@ function App() {
                         throw new Error(response.message || 'Something went wrong');
                     }
                     setPosts(() => {
-                        setLog(isLoggedIn);
                         setFetched(true);
                         return response.posts
                     });
@@ -37,14 +55,14 @@ function App() {
             };
             fetchPosts();
         }
-    }, []);
+    }, [isFetched]);
     return (
-        <div>
-            <nav>
-                <h3>NAVIGATION BAR</h3>
-            </nav>
-            <Outlet context={{posts, isLoggedIn}}/>
-        </div>
+        <>
+            <Navbar user={user} setUser={setUser} setToken={setToken}/>
+            <main>
+                <Outlet context={{posts, user, setToken}}/>
+            </main>
+        </>
     );
 }
 

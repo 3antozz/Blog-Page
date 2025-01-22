@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useOutletContext } from "react-router"
 export default function Login () {
+    const setToken = useOutletContext();
     let navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -27,10 +29,12 @@ export default function Login () {
             if (!request.ok) {
                 throw new Error(response.message || 'Something went wrong');
             }
-            setError(" ");
             localStorage.setItem("cred", response.token);
+            setToken(() => {
+                setError("");
+                return response.token;
+            })
             navigate('/')
-            console.log(response);
         } catch(err) {
             setError(err.message)
             console.log(err);
@@ -52,3 +56,5 @@ export default function Login () {
         </form>
     )
 }
+
+

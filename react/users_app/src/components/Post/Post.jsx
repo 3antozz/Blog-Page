@@ -1,44 +1,79 @@
 import styles from "./Post.module.css"
 import { useParams, useOutletContext } from "react-router";
 import { useState, useEffect } from "react";
+import Form from "../Form/Form";
 import PropTypes from "prop-types";
 export default function Post () {
     const { postId } = useParams();
+    const {user} = useOutletContext();
+    const [isFetched, setFetched] = useState(false)
     const [post, setPost] = useState(null);
-    const {isLoggedIn} = useOutletContext();
-    useEffect(() => {
-        const token = localStorage.getItem("cred");
-        const headers = isLoggedIn
-            ? {
-                    method: "GET",
+    const [comment, setComment] = useState("");
+    const [error, setError] = useState(null);
+    const handleInput = (e) => setComment(e.target.value)
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem("cred");
+            const request = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
+                method: 'POST',
+                headers: {
                     Authorization: `Bearer ${token}`,
-                }
-            : { method: "GET" };
-        console.log(isLoggedIn);
-        const fetchPosts = async () => {
-            try {
-                const request = await fetch(`http://localhost:3000/posts/${postId}`,
-                {
-                    headers: headers,
-                    mode: "cors",
-                });
-                const response = await request.json();
-                if (!request.ok) {
-                    throw new Error(response.message || 'Something went wrong');
-                }
-                setPost(response.post);
-                console.log(response);
-            } catch (err) {
-                console.log(err)
+                    "Content-Type": "application/json",
+                },
+                mode: "cors",
+                body: JSON.stringify({
+                    content: comment
+                })
+            })
+            const response = await request.json();
+            if (!request.ok) {
+                throw new Error(response.message || 'Something went wrong');
             }
-        };
-        fetchPosts();
-    }, [postId, isLoggedIn]);
+            setFetched(() => {
+                setError("");
+                setComment("");
+                return false;
+            })
+        } catch(err) {
+            setError(err.message)
+            console.log(err);
+        }
+    }
+    useEffect(() => {
+        if(!isFetched) {
+            const fetchPosts = async () => {
+                try {
+                    const request = await fetch(`http://localhost:3000/posts/${postId}`,
+                    {
+                        method: "GET",
+                        mode: "cors",
+                    });
+                    const response = await request.json();
+                    if (!request.ok) {
+                        throw new Error(response.message || 'Something went wrong');
+                    }
+                    setPost(() => {
+                        setFetched(true);
+                        return response.post
+                    });
+                    console.log(response);
+                } catch (err) {
+                    setError(err);
+                    console.log(err)
+                }
+            };
+            fetchPosts();
+        }
+    }, [postId, isFetched]);
+    if (error) {
+        return <div>Post doesn&apos;t exist</div>
+    }
     if (!post) {
-        return <div>Loading posts...</div>
+        return <div>Loading post...</div>
     }
     return (
-        <div>
+        <>
             <section className={styles.container}>
                 <img src={post.cover_url} alt={post.title} />
                 <h2>{post.title}</h2>
@@ -48,7 +83,16 @@ export default function Post () {
             <section className={styles.comments}>
                 {post.comments.map((comment) => <Comment key={comment.id} comment={comment}/>)}
             </section>
-        </div>
+            { user ? <Form>
+                <form action="" method="post" onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="comment">Comment:</label>
+                        <textarea id="comment" value={comment} onChange={handleInput}></textarea>
+                    </div>
+                    <button>Submit</button>
+                </form>
+            </Form> : <div>Login to comment</div> }
+        </>
     )
 }
 

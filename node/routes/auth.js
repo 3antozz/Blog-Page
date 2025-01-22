@@ -79,6 +79,14 @@ router.post('/sign-up', validateSignUp, async(req, res, next) => {
 })
 
 router.post('/login', signJWT)
+router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.json({
+        user: {
+            username: req.user.username,
+            isAdmin: req.user.isAdmin
+        }
+    })
+} )
 
 
 
