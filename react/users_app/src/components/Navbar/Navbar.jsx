@@ -14,9 +14,14 @@ export default function Navbar ({user, setUser, setToken}) {
     }
     return (
         <nav className={styles.nav}>
-            <h3>Antuuuzz</h3>
+            <Link><h1>Antuuuz Blog</h1></Link>
             {user && <h2>{user.username}</h2>}
-            {user ? <button onClick={handleLogout}>Logout</button> : <Link to="/login">Login</Link> }
+            {user ? <button onClick={handleLogout}>Logout</button> : 
+            <div className={styles.login}>
+                <Link to="/login">Login</Link>
+                <Link to="/sign-up">Register</Link>
+            </div>
+             }
         </nav>
     )
 }

@@ -1,5 +1,52 @@
-nav {
+.nav {
     background-color: rgb(60, 60, 134);
     color: white;
-    padding: 1rem;
+    padding: 1.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30vw;
+}
+
+
+.nav h1 {
+    font-size: 1.8rem;
+    transition: transform 200ms ease;
+}
+
+.login {
+    display: flex;
+    align-items: center;
+    gap: max(0.5rem, 2vw);
+}
+
+.login a {
+    font-size: 1.2rem;
+    transition: transform 200ms ease;
+}
+
+.login a:hover, .nav h1:hover {
+    text-decoration: underline;
+    filter: brightness(1.2);
+    transform: scale(1.25);
+}
+
+.login a:first-of-type {
+    background: linear-gradient(135deg, rgb(0, 180, 200), rgb(0, 130, 180));
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+
+@media (max-width: 768px) {
+    .nav {
+        justify-content: space-between;
+        gap: 1rem;
+    }
+    .login a {
+        font-size: 1rem;
+    }
+    .nav h1 {
+        font-size: 1.3rem;
+    }
 }

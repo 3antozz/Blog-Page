@@ -16,14 +16,14 @@ export default function Posts () {
 
 function Post ({post}) {
     return (
+        <Link to={`/posts/${post.id}`}>
             <section className={styles.container}>
-                    <Link to={`/posts/${post.id}`}>
                         <img src={post.cover_url} alt="" />
                         <h2>{post.title}</h2>
-                    </Link>
                     <p>{post.author.username}</p>
                     <p>{post.creationDate}</p>
             </section>
+        </Link>
     )
 }
 

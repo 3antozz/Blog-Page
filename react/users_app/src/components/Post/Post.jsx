@@ -28,7 +28,9 @@ export default function Post () {
             })
             const response = await request.json();
             if (!request.ok) {
-                throw new Error(response.message || 'Something went wrong');
+                const error = new Error('Invalid Request');
+                error.messages = response.errors || [error.message];
+                throw error;
             }
             setFetched(() => {
                 setError("");
@@ -36,7 +38,7 @@ export default function Post () {
                 return false;
             })
         } catch(err) {
-            setError(err.message)
+            setError(err.messages)
             console.log(err);
         }
     }
@@ -66,7 +68,7 @@ export default function Post () {
             fetchPosts();
         }
     }, [postId, isFetched]);
-    if (error) {
+    if (error && !Array.isArray(error)) {
         return <div>Post doesn&apos;t exist</div>
     }
     if (!post) {
@@ -85,6 +87,7 @@ export default function Post () {
             </section>
             { user ? <Form>
                 <form action="" method="post" onSubmit={handleSubmit}>
+                { error && error.map((error, index) => <li key={index}>{error}</li>) }
                     <div>
                         <label htmlFor="comment">Comment:</label>
                         <textarea id="comment" value={comment} onChange={handleInput}></textarea>

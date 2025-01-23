@@ -19,6 +19,21 @@ exports.getUser = async(username) => {
     })
 }
 
+exports.getPublishedPosts = async() => {
+    return await prisma.post.findMany({
+        where: {
+            published: true
+        },
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            },
+        }
+    })
+}
+
 exports.getAllPosts = async() => {
     return await prisma.post.findMany({
         include: {

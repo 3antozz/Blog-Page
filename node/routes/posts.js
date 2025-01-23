@@ -3,12 +3,17 @@ const fn = require('./fn');
 const asyncHandler = require('express-async-handler');
 const db = require('../db/queries');
 const passport = require('passport');
+const {body, validationResult} = require('express-validator');
 
-
+const validateMessage= [
+    body("content").trim().notEmpty().withMessage("Comment must not be empty").bail().isLength({min: 3, max: 70}).withMessage("Comment must be between 3 and 70 characters"),
+];
 const router = Router();
 
+
+
 router.get('/', asyncHandler(async(req, res) => {
-    const posts = await db.getAllPosts();
+    const posts = await db.getPublishedPosts();
     return res.json({posts});
 }))
 
@@ -24,6 +29,11 @@ router.get('/:postId', asyncHandler(async(req, res) => {
 router.use((req, res, next) => {
     passport.authenticate('jwt', { session: false })(req, res, next);
 })
+
+router.get('/all', fn.checkAdmin, asyncHandler(async(req, res) => {
+    const posts = await db.getAllPosts();
+    return res.json({posts});
+}))
 
 router.post('/', fn.checkAdmin, asyncHandler(async(req, res) => {
     const { title, cover_url, content } = req.body;
@@ -52,7 +62,13 @@ router.get('/:postId/comments', asyncHandler(async(req, res) => {
     return res.json({post});
 }))
 
-router.post('/:postId/comments', fn.checkAuth, asyncHandler(async(req, res) => {
+router.post('/:postId/comments', fn.checkAuth, validateMessage , asyncHandler(async(req, res, next) => {
+    const result = validationResult(req);
+    if(!result.isEmpty()) {
+        const errors = result.errors.map(err => err.msg);
+        errors.code = 400;
+        return next(errors)
+    }
     const { content } = req.body;
     const postId = req.params.postId;
     const post = await db.createComment(+req.user.id, +postId, content);

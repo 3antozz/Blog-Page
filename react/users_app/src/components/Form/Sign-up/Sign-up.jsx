@@ -31,7 +31,7 @@ export default function SignUp () {
             console.log(response);
             if (!request.ok) {
                 const error = new Error('Incorrect information');
-                error.messages = response.errors;
+                error.messages = response.errors || [error.message];
                 throw error;
             }
             setErrors([]);
@@ -54,7 +54,7 @@ export default function SignUp () {
                 <input type="password" id="password" onChange={handlePassword} value={password} />
             </div>
             <div>
-                <label htmlFor="confirm_password">Password</label>
+                <label htmlFor="confirm_password">Confirm Password</label>
                 <input type="password" id="confirm_password" onChange={handlePasswordConfirmation} value={confirmPassword} />
             </div>
             <button>Submit</button>

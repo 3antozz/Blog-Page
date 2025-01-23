@@ -51,8 +51,8 @@ async function signJWT (req, res, next) {
 }
 
 const validateSignUp = [
-    body("username").trim().notEmpty().withMessage("Username must not be empty").matches(/^[a-zA-Z0-9_]+$/).withMessage("Username must only contain alphabet and numbers and no spaces").isLength({min: 3, max: 20}).withMessage("Username must be between 3 and 20 characters"),
-    body("password").trim().notEmpty().withMessage("Password must not be empty").isLength({min: 6}).withMessage("Password must be atleast 6 characters long"),
+    body("username").trim().notEmpty().withMessage("Username must not be empty").bail().matches(/^[a-zA-Z0-9_]+$/).withMessage("Username must only contain alphabet and numbers and no spaces").isLength({min: 3, max: 20}).withMessage("Username must be between 3 and 20 characters"),
+    body("password").trim().notEmpty().withMessage("Password must not be empty").bail().isLength({min: 6}).withMessage("Password must be atleast 6 characters long"),
     body('confirm_password').custom((value, { req }) => {
         return value === req.body.password;
       }).withMessage("Passwords don't match")
@@ -62,7 +62,7 @@ router.post('/sign-up', validateSignUp, async(req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
         const errors = result.errors.map(err => err.msg);
-        errors.code = 401;
+        errors.code = 400;
         return next(errors)
     }
     bcrypt.hash(req.body.password, 10, async(err, hash) => {

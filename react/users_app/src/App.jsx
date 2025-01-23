@@ -10,7 +10,6 @@ function App() {
     useEffect(() => {
         const fetchUser = async () => {
             if(token) {
-                console.log("called");
                 try {
                     const request = await fetch("http://localhost:3000/user", {
                         method: 'GET',
