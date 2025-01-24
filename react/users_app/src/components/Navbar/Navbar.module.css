@@ -1,5 +1,5 @@
 .nav {
-    background-color: rgb(60, 60, 134);
+    background-color: rgb(33, 33, 95);
     color: white;
     padding: 1.5rem 0.5rem;
     display: flex;
@@ -11,7 +11,6 @@
 
 .nav h1 {
     font-size: 1.8rem;
-    transition: transform 200ms ease;
 }
 
 .login {
@@ -21,20 +20,35 @@
 }
 
 .login a {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     transition: transform 200ms ease;
 }
 
-.login a:hover, .nav h1:hover {
-    text-decoration: underline;
+.login a:hover, .logout:hover {
     filter: brightness(1.2);
     transform: scale(1.25);
+}
+
+
+
+.nav h1:hover {
+    text-decoration: underline;
 }
 
 .login a:first-of-type {
     background: linear-gradient(135deg, rgb(0, 180, 200), rgb(0, 130, 180));
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
+}
+
+.logout {
+    background: linear-gradient(135deg, rgb(0, 180, 200), rgb(0, 130, 180));
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: transform 200ms ease;
 }
 
 

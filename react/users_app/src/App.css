@@ -2,12 +2,13 @@
   height: 100dvh;
   display: flex;
   flex-direction: column;
-  background-color: #1c1c1d;
   color: white;
   font-family: 'Roboto','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 main {
   flex: 1;
+  padding: 1rem 10vw;
+  background-color: #1c1c1d;
 }
 

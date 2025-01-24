@@ -3,6 +3,7 @@ import { useParams, useOutletContext } from "react-router";
 import { useState, useEffect } from "react";
 import Form from "../Form/Form";
 import PropTypes from "prop-types";
+import { LoaderCircle } from 'lucide-react';
 export default function Post () {
     const { postId } = useParams();
     const {user} = useOutletContext();
@@ -72,7 +73,12 @@ export default function Post () {
         return <div>Post doesn&apos;t exist</div>
     }
     if (!post) {
-        return <div>Loading post...</div>
+        return(
+            <div className={styles.loading}>
+            <LoaderCircle size={60} className={styles.icon}/>
+            <p>This may take a while</p>
+        </div>
+        )
     }
     return (
         <>
