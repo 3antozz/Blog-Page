@@ -1,4 +1,77 @@
-.container {
-    border: 2px solid grey;
+.formContainer {
+    border: 2px solid rgba(96, 96, 241, 0.827);
     border-radius: 15px;
+    padding: 1.5rem;
+    padding-bottom: 0.5rem;
+    width: 20rem;
 }
+
+.formContainer label {
+    display: block;
+}
+
+.formContainer input, .formContainer textarea{
+    width: 100%;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    padding: 0.2rem;
+    background-color: rgb(202, 199, 199);
+    outline-color: red;
+    resize: none;
+}
+
+.formContainer input:focus {
+    outline-color: red;
+    outline-width: 3px;
+    outline-style: solid;
+}
+
+.formContainer button {
+    background: linear-gradient(135deg, rgb(75, 75, 171), rgb(63, 63, 192));
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+    transition: transform 170ms ease;
+    margin-bottom: 0.8rem;
+    border: none;
+}
+
+.formContainer li {
+    margin-bottom: 0.5rem;
+}
+
+.formContainer button:hover {
+    filter: brightness(1.25);
+    transform: scale(1.25);
+}
+
+.formContainer form > div {
+    margin-bottom: 1rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.container h1 {
+    margin-bottom: 1rem;
+}
+
+.container a {
+    color: #ff8484;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container a:hover {
+    text-decoration: underline;
+}
+
+
+

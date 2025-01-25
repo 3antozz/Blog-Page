@@ -1,3 +1,4 @@
+const { format } = require("date-fns");
 exports.checkAuth = (req, res, next) => {
     if(req.user) {
         return next();
@@ -17,3 +18,7 @@ exports.checkAdmin = [this.checkAuth, (req, res, next) => {
         return next(error)
     }
 }]
+
+exports.formatDate = (date) => {
+    return format(new Date(date), "PP")
+}

@@ -58,6 +58,9 @@ exports.getPost = async(id) => {
                 }
             },
             comments: {
+                orderBy: {
+                    creationDate: 'desc'
+                },
                 include: {
                     author: {
                         select: {

@@ -14,13 +14,18 @@ const router = Router();
 
 router.get('/', asyncHandler(async(req, res) => {
     const posts = await db.getPublishedPosts();
-    return res.json({posts});
+    const formattedPosts = posts.map((post) => {
+        return {...post, creationDate: fn.formatDate(post.creationDate)}
+    });
+    return res.json({posts: formattedPosts});
 }))
 
 router.get('/:postId', asyncHandler(async(req, res) => {
     const postId = req.params.postId;
     const post = await db.getPost(+postId);
+    post.creationDate = fn.formatDate(post.creationDate)
     return res.json({post});
+
 }))
 
 // PROTECTED ROUTES

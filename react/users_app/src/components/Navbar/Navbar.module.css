@@ -8,6 +8,11 @@
     gap: 30vw;
 }
 
+.nav a {
+    text-decoration: none;
+    color: white;
+}
+
 
 .nav h1 {
     font-size: 1.8rem;
@@ -30,8 +35,7 @@
 }
 
 
-
-.nav h1:hover {
+.nav h1:hover, .login a:last-of-type:hover {
     text-decoration: underline;
 }
 

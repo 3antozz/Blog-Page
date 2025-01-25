@@ -1,3 +1,92 @@
+.blog img {
+  width: 50rem;
+  margin: auto;
+  margin-bottom: 2rem;
+}
+
+.blog h1 {
+  font-size: 2.2rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 8rem;
+}
+
+.blog {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgb(124 124 255);
+}
+
+.info {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgb(124 124 255);
+}
+
+.form form textarea {
+  width: 100%;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  padding: 0.4rem;
+  background-color: rgb(202, 199, 199);
+  outline-color: red;
+  resize: none;
+}
+
+.form form textarea:focus {
+  outline-color: red;
+  outline-width: 3px;
+  outline-style: solid;
+}
+
+.form form button {
+  background: linear-gradient(135deg, rgb(75, 75, 171), rgb(63, 63, 192));
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  color: white;
+  display: block;
+  margin: auto;
+  cursor: pointer;
+  transition: transform 170ms ease;
+  margin-bottom: 0.8rem;
+  border: none;
+}
+
+.comments h1 {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgb(124 124 255);
+}
+
+.comment {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 2px solid rgba(96, 96, 241, 0.496);
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.comment svg {
+  align-self: flex-start;
+}
+
+.comment h4 {
+  margin-bottom: 0.7rem;
+}
+
+.form form li {
+  margin-bottom: 0.5rem;
+}
+
+.form form button:hover {
+  filter: brightness(1.25);
+  transform: scale(1.25);
+}
+
+
 .icon {
     animation: 800ms linear 0s infinite loading;
     margin-bottom: 0.5rem;
@@ -14,7 +103,6 @@
     justify-content: center;
     align-items: center;
 }
-
 
 @keyframes loading {
     from {
