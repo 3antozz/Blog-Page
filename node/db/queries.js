@@ -111,6 +111,23 @@ exports.updatePost = async(postId, title, published = false, cover_url = '/image
     })
 }
 
+exports.getComment = async(postId, commentId) => {
+    return await prisma.comment.findUniqueOrThrow({
+        where: {
+            id: commentId,
+            postId
+        },
+        include: {
+            author: {
+                select: {
+                    id: true,
+                    username: true
+                }
+            }
+        }
+    })
+}
+
 exports.getComments = async(postId) => {
     return await prisma.comment.findMany({
         where: {

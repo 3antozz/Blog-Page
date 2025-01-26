@@ -1,5 +1,6 @@
 import { useNavigate, useOutletContext, Link } from "react-router";
 import { useState } from "react";
+import styles from "./Form.module.css"
 export default function SignUp () {
     let navigate = useNavigate();
     const {user} = useOutletContext();
@@ -59,7 +60,7 @@ export default function SignUp () {
     return (
         <form onSubmit={handleSubmit}>
             { errors && errors.map((error, index) => <li key={index}>{error}</li>) }
-            { success && <li>Registration successful! You can login <Link to="/login">here</Link></li> }
+            { success && <li className={styles.success}>Registration successful! You can login <Link to="/login">here</Link></li> }
             <div>
                 <label htmlFor="username">Username</label>
                 <input type="text" id="username" onChange={handleUsername} value={username} />

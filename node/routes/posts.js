@@ -35,6 +35,24 @@ router.use((req, res, next) => {
     passport.authenticate('jwt', { session: false })(req, res, next);
 })
 
+router.delete('/:postId/comments/:commentId', fn.checkAuth, asyncHandler(async(req, res, next) => {
+    const postId = req.params.postId;
+    const commentId = req.params.commentId;
+    let comment;
+    try {
+        comment = await db.getComment(+postId, +commentId);
+    } catch(err) {
+        return next(err)
+    }
+    if(req.user.id !== comment.author.id && !req.user.isAdmin) {
+        const error = new Error('Unauthorized Access');
+        error.code = 401;
+        return next(error)
+    }
+    const post = await db.deleteComment(+postId, +commentId);
+    return res.json({post});
+}))
+
 router.get('/all', fn.checkAdmin, asyncHandler(async(req, res) => {
     const posts = await db.getAllPosts();
     return res.json({posts});
@@ -80,12 +98,7 @@ router.post('/:postId/comments', fn.checkAuth, validateMessage , asyncHandler(as
     return res.json({post});
 }))
 
-router.delete('/:postId/comments/:commentId', fn.checkAdmin, asyncHandler(async(req, res) => {
-    const postId = req.params.postId;
-    const commentId = req.params.commentId
-    const post = await db.deleteComment(+postId, +commentId);
-    return res.json({post});
-}))
+
 
 
 

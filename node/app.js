@@ -31,7 +31,7 @@ app.use((error, req, res, next) => {
     }
     if (error.code === 'P2025') {
         return res.status(400).json({
-            message: "Post doesn't exist",
+            message: "Resource Not Found",
             code: 400
         });
     }

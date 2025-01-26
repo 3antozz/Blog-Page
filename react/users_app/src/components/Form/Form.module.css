@@ -52,6 +52,12 @@
     margin-bottom: 1rem;
 }
 
+.success {
+    background-color: rgb(9 112 36);
+    padding: 1rem;
+    border-radius: 15px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -65,7 +71,6 @@
 
 .container a {
     color: #ff8484;
-    text-decoration: none;
     font-weight: bold;
 }
 

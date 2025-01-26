@@ -11,7 +11,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  padding: 0 8rem;
+  padding: 0 8vw;
 }
 
 .blog {
@@ -42,6 +42,10 @@
   outline-style: solid;
 }
 
+.content {
+  font-size: 1.1rem;
+}
+
 .form form button {
   background: linear-gradient(135deg, rgb(75, 75, 171), rgb(63, 63, 192));
   padding: 0.5rem 1rem;
@@ -55,10 +59,23 @@
   border: none;
 }
 
+.form h2 {
+  text-align: center;
+}
+
+.form h2 a {
+  text-decoration: none;
+  color: red;
+}
+
+.form h2 a:hover {
+  text-decoration: underline;
+}
+
 .comments h1 {
-  padding-bottom: 1rem;
+  /* padding-bottom: 1rem; */
   margin-bottom: 1rem;
-  border-bottom: 2px solid rgb(124 124 255);
+  /* border-bottom: 2px solid rgb(124 124 255); */
 }
 
 .comment {
@@ -71,6 +88,48 @@
 
 .comment svg {
   align-self: flex-start;
+}
+
+.comment > div {
+  flex: 1;
+}
+
+.comment > button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 200ms ease;
+  align-self: center;
+  padding: 0;
+}
+
+.error {
+  position: fixed;
+  background-color: rgb(170, 51, 51);
+  padding: 1rem;
+  border-radius: 15px;
+  top: 2%;
+  right: 1%;
+  animation: fadeOut 2s ease-in-out forwards;
+  animation-delay: 6s;
+}
+
+.exist {
+  align-content: center;
+  height: 100%;
+  text-align: center;
+}
+
+.exist > a {
+  color: red;
+}
+
+.comment > button:hover {
+  transform: scale(1.4);
+}
+
+.comment > button svg:hover {
+  stroke: red;
 }
 
 .comment h4 {
@@ -104,6 +163,8 @@
     align-items: center;
 }
 
+
+
 @keyframes loading {
     from {
       transform: rotate(0);
@@ -111,4 +172,9 @@
     to {
       transform: rotate(1turn);
     }
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
 }

@@ -32,6 +32,7 @@ function App() {
         fetchUser();
     }, [token])
     useEffect(() => {
+        let ignore = false;
         if (!isFetched) {
             const fetchPosts = async () => {
                 try {
@@ -43,16 +44,21 @@ function App() {
                     if (!request.ok) {
                         throw new Error(response.message || 'Something went wrong');
                     }
-                    setPosts(() => {
-                        setFetched(true);
-                        return response.posts
-                    });
+                    if (!ignore) {
+                        setPosts(() => {
+                            setFetched(true);
+                            return response.posts
+                        });
+                    }
                     console.log(response);
                 } catch (err) {
                     console.log(err)
                 }
             };
             fetchPosts();
+        }
+        return () => {
+            ignore = true
         }
     }, [isFetched]);
     return (
