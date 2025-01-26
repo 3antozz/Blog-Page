@@ -20,7 +20,6 @@ export default function Navbar ({user, setUser, setToken}) {
             </div> : 
             <div className={styles.login}>
                 <Link to="/login">Login</Link>
-                <Link to="/sign-up">Register</Link>
             </div>
              }
         </nav>

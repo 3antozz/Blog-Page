@@ -59,9 +59,8 @@ export default function Post () {
                 const error = new Error('Unexpected Error, please try again later');
                 throw error;
             }
-            setFetched(false);
+            setFetched(false)
             setDeleteError("");
-
         } catch(err) {
             setDeleteError(err.message);
             setTimeout(() => {

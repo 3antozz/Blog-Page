@@ -5,8 +5,20 @@ import { useEffect, useState } from "react";
 function App() {
     const [isFetched, setFetched] = useState(false)
     const [posts, setPosts] = useState([]);
+    const [error, setError] = useState("")
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("cred"));
+
+    const publishPost = (postId) => {
+        setPosts((prev) => {
+            return prev.map((post) => {
+                if(post.id == postId) {
+                    return {...post, published: !post.published}
+                }
+                return post
+            })
+        })
+    }
     useEffect(() => {
         const fetchUser = async () => {
             if(token) {
@@ -36,8 +48,11 @@ function App() {
         if (!isFetched) {
             const fetchPosts = async () => {
                 try {
-                    const request = await fetch("http://localhost:3000/posts", {
+                    const request = await fetch("http://localhost:3000/posts/all", {
                         method: 'GET',
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
                         mode: "cors",
                     });
                     const response = await request.json();
@@ -47,9 +62,11 @@ function App() {
                     if (!ignore) {
                         setPosts(response.posts)
                         setFetched(true);
+                        setError("")
                     }
                     console.log(response);
                 } catch (err) {
+                    setError(err.message);
                     console.log(err)
                 }
             };
@@ -58,12 +75,12 @@ function App() {
         return () => {
             ignore = true
         }
-    }, [isFetched]);
+    }, [isFetched, token]);
     return (
         <>
             <Navbar user={user} setUser={setUser} setToken={setToken}/>
             <main>
-                <Outlet context={{posts, user, setToken}}/>
+                <Outlet context={{posts, user, setToken, error, publishPost}}/>
             </main>
         </>
     );

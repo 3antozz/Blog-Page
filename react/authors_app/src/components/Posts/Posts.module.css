@@ -1,0 +1,139 @@
+.posts > h1 {
+    text-align: center;
+}
+
+.post img {
+    width: 5rem;
+    object-fit: cover;
+}
+
+.post a {
+    text-decoration: none;
+    color: white;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.container a:first-of-type {
+    flex: 1;
+}
+
+.container {
+    padding-top: 0.5rem;
+    border-bottom: 1px solid grey;
+    padding-bottom: 0.5rem;
+}
+
+.post a:not(:first-of-type), .post button {
+    display: block;
+    text-align: center;
+    background: linear-gradient(135deg, rgb(75, 75, 171), rgb(63, 63, 192));
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    margin-top: 0.5rem;
+    transition: transform 200ms ease;
+}
+
+.icon {
+    animation: 800ms linear 0s infinite loading;
+    margin-bottom: 0.5rem;
+}
+
+.loading p {
+    font-size: 1.2rem;
+}
+
+.loading {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.post a:first-of-type:hover {
+    text-decoration: underline;
+}
+
+.published {
+    background: #1c721c !important;
+}
+
+.unpublished {
+    background: #850000 !important;
+}
+
+.searchIcon {
+    position: relative;
+    left: -35px;
+    top: 5px;
+}
+
+.error {
+    position: fixed;
+    background-color: rgb(170, 51, 51);
+    padding: 1rem;
+    border-radius: 15px;
+    top: 2%;
+    right: 1%;
+    animation: fadeOut 2s ease-in-out forwards;
+    animation-delay: 6s;
+  }
+
+.post a:not(:first-of-type):hover, .post button:hover {
+    cursor: pointer;
+    filter: brightness(1.2);
+    transform: scale(1.15)
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+}
+
+.search input {
+    border-radius: 10px;
+    background-color: rgb(202, 199, 199);
+    font-size: 1.1rem;
+    padding: 0.2rem 0.5rem;
+    outline-color: red;
+    width: 50%;
+}
+
+.search input:focus {
+    outline-color: red;
+    outline-width: 3px;
+    outline-style: solid;
+}
+
+
+
+@keyframes loading {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(1turn);
+    }
+}
+
+@media (min-width: 700px) and (max-width: 950px) {
+}
+
+
+@media (max-width: 700px) {
+    .posts {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    .post a {
+        width: 100%;
+    }
+}

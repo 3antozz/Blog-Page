@@ -20,6 +20,14 @@ router.get('/', asyncHandler(async(req, res) => {
     return res.json({posts: formattedPosts});
 }))
 
+router.get('/all', passport.authenticate('jwt', { session: false }), fn.checkAdmin, asyncHandler(async(req, res) => {
+    const posts = await db.getAllPosts();
+    const formattedPosts = posts.map((post) => {
+        return {...post, creationDate: fn.formatDate(post.creationDate)}
+    });
+    return res.json({posts: formattedPosts});
+}))
+
 router.get('/:postId', asyncHandler(async(req, res) => {
     const postId = req.params.postId;
     const post = await db.getPost(+postId);
@@ -34,6 +42,17 @@ router.get('/:postId', asyncHandler(async(req, res) => {
 router.use((req, res, next) => {
     passport.authenticate('jwt', { session: false })(req, res, next);
 })
+
+router.put('/:postId/publish', fn.checkAdmin, asyncHandler(async(req, res, next) => {
+    const postId = req.params.postId;
+    try {
+        await db.getPost(+postId);
+    } catch(err) {
+        return next(err)
+    }
+    const post = await db.publishPost(+postId);
+    return res.json({post});
+}))
 
 router.delete('/:postId/comments/:commentId', fn.checkAuth, asyncHandler(async(req, res, next) => {
     const postId = req.params.postId;
@@ -53,10 +72,6 @@ router.delete('/:postId/comments/:commentId', fn.checkAuth, asyncHandler(async(r
     return res.json({post});
 }))
 
-router.get('/all', fn.checkAdmin, asyncHandler(async(req, res) => {
-    const posts = await db.getAllPosts();
-    return res.json({posts});
-}))
 
 router.post('/', fn.checkAdmin, asyncHandler(async(req, res) => {
     const { title, cover_url, content } = req.body;
@@ -85,6 +100,7 @@ router.get('/:postId/comments', asyncHandler(async(req, res) => {
     return res.json({post});
 }))
 
+
 router.post('/:postId/comments', fn.checkAuth, validateMessage , asyncHandler(async(req, res, next) => {
     const result = validationResult(req);
     if(!result.isEmpty()) {
@@ -97,6 +113,10 @@ router.post('/:postId/comments', fn.checkAuth, validateMessage , asyncHandler(as
     const post = await db.createComment(+req.user.id, +postId, content);
     return res.json({post});
 }))
+
+
+
+
 
 
 

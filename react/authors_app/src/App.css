@@ -1,0 +1,19 @@
+#root {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-family: 'Roboto','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+  flex: 1;
+  padding: 3rem 10vw;
+  background-color: #1c1c1d;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 2rem 0.3rem;
+  }
+}

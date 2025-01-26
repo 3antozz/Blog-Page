@@ -49,6 +49,31 @@ async function signJWT (req, res, next) {
         res.json({token});
     })
 }
+async function adminSignJWT (req, res, next) {
+    const user = await db.getUser(req.body.username);
+    if(!user) {
+        const error = new Error('Incorrect username');
+        error.code = 401;
+        return next(error)
+    }
+    if(!user.isAdmin) {
+        const error = new Error('Unauthorized Access');
+        error.code = 401;
+        return next(error)
+    }
+    const match = await bcrypt.compare(req.body.password, user.password)
+    if(!match) {
+        const error = new Error('Incorrect password');
+        error.code = 401;
+        return next(error)
+    }
+    jwt.sign({username: req.body.username}, process.env.TOKEN_SECRET, (err, token) => {
+        if (err) {
+            return next(err);
+        }
+        res.json({token});
+    })
+}
 
 const validateSignUp = [
     body("username").trim().notEmpty().withMessage("Username must not be empty").bail().matches(/^[a-zA-Z0-9_]+$/).withMessage("Username must only contain alphabet and numbers and no spaces").isLength({min: 3, max: 20}).withMessage("Username must be between 3 and 20 characters"),
@@ -79,6 +104,7 @@ router.post('/sign-up', validateSignUp, async(req, res, next) => {
 })
 
 router.post('/login', signJWT)
+router.post('/admin-login', adminSignJWT)
 router.get('/user', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.json({
         user: {

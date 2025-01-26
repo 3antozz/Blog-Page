@@ -40,19 +40,15 @@ export default function SignUp () {
                 error.messages = response.errors || [error.message];
                 throw error;
             }
-            setErrors(() => {
-                setSuccess(true);
-                setUsername("");
-                setPassword("");
-                setConfirmPassword("");
-                return [];
-            });
+            setErrors([])
+            setSuccess(true);
+            setUsername("");
+            setPassword("");
+            setConfirmPassword("");
             
         } catch(err) {
-            setErrors(() => {
-                setSuccess(false);
-                return err.messages
-            })
+            setErrors(err.messages)
+            setSuccess(false);
             console.log(err);
         }
     }

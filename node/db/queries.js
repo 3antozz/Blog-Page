@@ -24,6 +24,9 @@ exports.getPublishedPosts = async() => {
         where: {
             published: true
         },
+        orderBy: {
+            creationDate: 'desc'
+        },
         include: {
             author: {
                 select: {
@@ -36,6 +39,9 @@ exports.getPublishedPosts = async() => {
 
 exports.getAllPosts = async() => {
     return await prisma.post.findMany({
+        orderBy: {
+            creationDate: 'desc'
+        },
         include: {
             author: {
                 select: {
@@ -95,6 +101,14 @@ exports.deletePost = async(id) => {
             id
         }
     })
+}
+
+exports.publishPost = async(postId) => {
+    return await prisma.$executeRaw`
+        UPDATE "Post" 
+        SET "published" = NOT "published" 
+        WHERE "id" = ${postId}
+    `;
 }
 
 exports.updatePost = async(postId, title, published = false, cover_url = '/images/no-image.jpg', content = "" ) => {
