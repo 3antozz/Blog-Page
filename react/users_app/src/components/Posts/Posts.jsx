@@ -16,11 +16,11 @@ export default function Posts () {
     return (
         <>
             <section className={styles.intro}>
+                <img src="/closeup-coding-html-programming-screen-laptop-development-web-developer_641010-43297.avif" alt="a laptop" />
                 <div>
                     <h1>Welcome to my Blog</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi quia odit dolorem recusandae natus quae cumque iusto ab eligendi, blanditiis dolorum nulla, eveniet rerum corrupti fugiat exercitationem deserunt quam non.</p>
                 </div>
-                <img src="/closeup-coding-html-programming-screen-laptop-development-web-developer_641010-43297.avif" alt="a laptop" />
             </section>
             <h1 className={styles.blog}>Blog Posts</h1>
             <section className={styles.posts}>
