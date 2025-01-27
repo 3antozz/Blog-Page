@@ -19,6 +19,12 @@ function App() {
             })
         })
     }
+
+    const deletePost = (postId) => {
+        setPosts((prev) => {
+            return prev.filter((post) => post.id != postId)
+        })
+    }
     useEffect(() => {
         const fetchUser = async () => {
             if(token) {
@@ -80,7 +86,7 @@ function App() {
         <>
             <Navbar user={user} setUser={setUser} setToken={setToken}/>
             <main>
-                <Outlet context={{posts, user, setToken, error, publishPost}}/>
+                <Outlet context={{posts, user, setToken, setFetched, error, publishPost, deletePost}}/>
             </main>
         </>
     );

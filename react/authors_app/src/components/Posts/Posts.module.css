@@ -69,13 +69,17 @@
     background: #850000 !important;
 }
 
+.delete {
+    background: #850000 !important;
+}
+
 .searchIcon {
     position: relative;
     left: -35px;
     top: 5px;
 }
 
-.error {
+.error, .success {
     position: fixed;
     background-color: rgb(170, 51, 51);
     padding: 1rem;
@@ -84,7 +88,11 @@
     right: 1%;
     animation: fadeOut 2s ease-in-out forwards;
     animation-delay: 6s;
-  }
+}
+
+.success {
+    background-color: green;
+}
 
 .post a:not(:first-of-type):hover, .post button:hover {
     cursor: pointer;

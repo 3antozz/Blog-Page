@@ -3,11 +3,13 @@ import { useOutletContext } from "react-router";
 import { Link } from "react-router";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { LoaderCircle, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
+import { LoaderCircle } from "lucide-react";
 export default function Posts () {
-    const { posts, error, user, publishPost } = useOutletContext();
+    const { posts, error, user, publishPost, deletePost } = useOutletContext();
     const [searchValue, setSearchValue] = useState("");
     const [publishError, setPublishError] = useState("")
+    const [success, setSuccess] = useState(false);
     const handleSearch = (e) => setSearchValue(e.target.value)
     const switchPublishStatus = async (postId) => {
         try {
@@ -34,6 +36,35 @@ export default function Posts () {
             console.log(err);
         }
     }
+    const removePost = async (postId) => {
+        try {
+            const token = localStorage.getItem("cred");
+            const request = await fetch(`http://localhost:3000/posts/${postId}`, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                mode: "cors",
+            })
+            if (!request.ok) {
+                const error = new Error('Unexpected Error, please try again later');
+                throw error;
+            }
+            deletePost(+postId)
+            setPublishError("");
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);;
+            }, 8000)
+        } catch(err) {
+            setPublishError(err.message);
+            setTimeout(() => {
+                setPublishError("");
+            }, 8000)
+            console.log(err);
+        }
+    }
     if(!user) {
         return (
             <div className={styles.loading}>
@@ -48,12 +79,12 @@ export default function Posts () {
         </div>
         )
     }
-    if (posts.length === 0) {
+    if (posts.length === 0){
         return (
-        <div className={styles.loading}>
-            <LoaderCircle size={60} className={styles.icon}/>
-            <p>This may take a while</p>
-        </div>
+            <div className="loading">
+                <LoaderCircle size={60} className="icon"/>
+                <p>This may take a while</p>
+            </div>
         )
     }
     const filteredPosts = posts.filter((post) => {
@@ -64,6 +95,7 @@ export default function Posts () {
     return (
         <>
             {publishError && <h3 className={styles.error}>{publishError}</h3>}
+            {success && <h3 className={styles.success}>Post deleted successfully</h3>}
             <div className={styles.search}>
                 <label htmlFor="search"></label>
                 <input type="text" id="search" value={searchValue} onChange={handleSearch} placeholder="Search for posts..." />
@@ -72,20 +104,21 @@ export default function Posts () {
             <h1 className={styles.blog}>Blog Posts</h1>
             <section className={styles.posts}>
                 {(searchValue && filteredPosts.length === 0) && <h1>No post found</h1>}
-                {searchValue ? filteredPosts.map((post) => <Post key={post.id} post={post} publish={switchPublishStatus}/>) : posts.map((post) => <Post key={post.id} post={post} publish={switchPublishStatus}/>) }
+                {searchValue ? filteredPosts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) : posts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) }
             </section>
         </>
     )
 }
 
-function Post ({post, publish}) {
+function Post ({post, publishPost, deletePost}) {
     return (
         <section className={styles.post}>
             <section className={styles.container}>
                 <img src={post.cover_url ? post.cover_url : "/istockphoto-1351443977-612x612.jpg"} alt="" />
                 <Link to={`/posts/${post.id}`}>{post.title}</Link>
                 <p>{post.creationDate} by <em>{post.author.username}</em></p>
-                <button onClick={() => publish(post.id)} className={post.published ? styles.published : styles.unpublished}>{post.published ? "Published" : "Not Published"}</button>
+                <button onClick={() => publishPost(post.id)} className={post.published ? styles.published : styles.unpublished}>{post.published ? "Published" : "Not Published"}</button>
+                <button onClick={() => deletePost(post.id)} className={styles.delete}>Delete</button>
                 <Link to={`/posts/edit/${post.id}`}>Edit</Link>
             </section>
         </section>
@@ -95,7 +128,8 @@ function Post ({post, publish}) {
 
 Post.propTypes = {
     post: PropTypes.object.isRequired,
-    publish: PropTypes.func.isRequired,
+    publishPost: PropTypes.func.isRequired,
+    deletePost: PropTypes.func.isRequired,
 }
 
 

@@ -2,7 +2,9 @@ import styles from "./Post.module.css"
 import { useParams, useOutletContext, Link } from "react-router";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { LoaderCircle, CircleUser, Trash } from 'lucide-react';;
+import { LoaderCircle, CircleUser, Trash } from 'lucide-react';
+import DOMPurify from 'dompurify';
+import parse from 'html-react-parser';
 export default function Post () {
     const { postId } = useParams();
     const {user} = useOutletContext();
@@ -101,6 +103,13 @@ export default function Post () {
             ignore = true;
         };
     }, [postId, isFetched]);
+    if(!user) {
+        return (
+            <div className={styles.loading}>
+                <h1>Please Login first</h1>
+            </div>
+            )
+    }
     if (error && !Array.isArray(error)) {
         return (
         <div className={styles.exist}>
@@ -112,18 +121,21 @@ export default function Post () {
     if (!post) {
         return(
             <div className={styles.loading}>
-            <LoaderCircle size={60} className={styles.icon}/>
-            <p>This may take a while</p>
-        </div>
+                <LoaderCircle size={60} className={styles.icon}/>
+                <p>This may take a while</p>
+            </div>
         )
     }
+    const cleanContent = DOMPurify.sanitize(post.content);
     return (
         <div className={styles.container}>
             <section className={styles.blog}>
                 <h1>{post.title}</h1>
                 <p className={styles.info}>Written by <em>{post.author.username}</em> on {post.creationDate}</p>
                 <img src={post.cover_url} alt={post.title} />
-                <p className={styles.content}>{post.content} Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit quam recusandae eius enim. Corporis obcaecati blanditiis distinctio soluta natus aperiam ullam ipsam dolor vitae in ex a saepe, impedit perferendis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis unde nisi officiis reiciendis exercitationem id maiores explicabo ut voluptate quos accusantium, rem quibusdam quasi in illo ex necessitatibus sequi blanditiis.</p>
+                <p className={styles.content}>
+                    {parse(cleanContent)}
+                </p>
             </section>
             <section className={styles.comments}>
                 <h1>Comments</h1>

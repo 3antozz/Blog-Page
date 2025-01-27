@@ -12,6 +12,7 @@ main {
   background-color: #1c1c1d;
 }
 
+
 @media (max-width: 600px) {
   main {
     padding: 2rem 0.3rem;
