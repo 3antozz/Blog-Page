@@ -6,7 +6,8 @@ import Form from './components/Form/Form.jsx'
 import Login from './components/Form/Login.jsx'
 import Posts from './components/Posts/Posts.jsx'
 import Post from './components/Post/Post.jsx'
-import Edit from './components/Edit/Edit.jsx'
+import Edit from './components/Add-Edit/Edit.jsx'
+import Add from './components/Add-Edit/Add.jsx'
 import { BrowserRouter, Routes, Route } from "react-router";
 
 createRoot(document.getElementById('root')).render(
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/login' element={<Login/>}/>
         </Route>
         <Route path='/posts/edit/:postId' element={<Edit/>}/>
+        <Route path='/posts/add' element={<Add/>}/>
       </Route>
     </Routes>
     </BrowserRouter>

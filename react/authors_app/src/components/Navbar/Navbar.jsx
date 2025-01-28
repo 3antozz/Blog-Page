@@ -12,7 +12,7 @@ export default function Navbar ({user, setUser, setToken}) {
     }
     return (
         <nav className={styles.nav}>
-            <Link to="/"><h1>Antuuuz Blog</h1></Link>
+            <Link to="/"><h1>Blog Authors</h1></Link>
             {user ?
             <div className={styles.login}>
                 <h3>{user.username}</h3>

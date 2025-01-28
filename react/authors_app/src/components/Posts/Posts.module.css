@@ -36,6 +36,7 @@
     border-radius: 0.5rem;
     border: none;
     color: white;
+    flex-grow: 0;
     margin-top: 0.5rem;
     transition: transform 200ms ease;
 }
@@ -47,6 +48,10 @@
 
 .loading p {
     font-size: 1.2rem;
+}
+
+.external {
+    display: none;
 }
 
 .loading {
@@ -74,9 +79,8 @@
 }
 
 .searchIcon {
-    position: relative;
-    left: -35px;
-    top: 5px;
+    position: absolute;
+    right: 10px;
 }
 
 .error, .success {
@@ -84,7 +88,7 @@
     background-color: rgb(170, 51, 51);
     padding: 1rem;
     border-radius: 15px;
-    top: 2%;
+    top: 15%;
     right: 1%;
     animation: fadeOut 2s ease-in-out forwards;
     animation-delay: 6s;
@@ -102,16 +106,18 @@
 
 .search {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    width: 50%;
+    position: relative;
 }
 
 .search input {
     border-radius: 10px;
     background-color: rgb(202, 199, 199);
     font-size: 1.1rem;
-    padding: 0.2rem 0.5rem;
+    padding: 0.3rem 0.5rem;
     outline-color: red;
-    width: 50%;
+    width: 100%;
 }
 
 .search input:focus {
@@ -120,6 +126,34 @@
     outline-style: solid;
 }
 
+.top {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.add {
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    gap: 0.2rem;
+    transition: transform 200ms ease;
+    background: linear-gradient(135deg, rgb(75, 75, 171), rgb(63, 63, 192));
+    padding: 0.4rem;
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+}
+
+.blog {
+    margin-top: 0.5rem;
+}
+
+
+.add:hover {
+    filter: brightness(1.2);
+    transform: scale(1.2);
+}
 
 
 @keyframes loading {
@@ -131,17 +165,39 @@
     }
 }
 
-@media (min-width: 700px) and (max-width: 950px) {
+@media (max-width: 950px) {
+    .date {
+        display: none;
+    }
+    svg {
+        width: 1.2rem;
+    }
+    .post a:not(:first-of-type), .post button {
+        padding: 0.4rem 0.8rem;
+    }
+    .container {
+        gap: 0.5rem;
+    }
+    .blog {
+        text-align: center;
+    }
 }
 
 
 @media (max-width: 700px) {
-    .posts {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1rem;
+    .search input {
+        font-size: 1rem;
     }
-    .post a {
-        width: 100%;
+    .post img {
+        display: none;
+    }
+    .external {
+        display: block;
+    }
+    svg {
+        width: 1rem;
+    }
+    .post a:not(:first-of-type), .post button {
+        padding: 0.2rem 0.6rem;
     }
 }

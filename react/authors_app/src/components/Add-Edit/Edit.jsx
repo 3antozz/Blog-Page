@@ -66,6 +66,7 @@ export default function Edit () {
                     title: titleInput,
                     cover_url: coverURL,
                     content,
+                    published
                 })
             })
             const response = await request.json();
@@ -86,7 +87,7 @@ export default function Edit () {
     }
       
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.postForm}>
             { updateError && updateError.map((error, index) => <li key={index} className={styles.error}>{error}</li>) }
             { success && <li className={styles.success}>Post Updated Successfully</li> }
             <div>
@@ -97,9 +98,10 @@ export default function Edit () {
                 <label htmlFor="cover_url">Cover image url</label>
                 <input type="text" id="cover_url" value={coverURL} onChange={handleCover} />
             </div>
-            <div>
+            <div className={styles.publish}>
                 <label htmlFor="published">Publish post?</label>
                 <input type="checkbox" id="published" checked={published} onChange={handlePublished} />
+                <button>Update Post</button>
             </div>
             <Editor
                 apiKey={import.meta.env.VITE_TINY_API_KEY}
@@ -119,11 +121,13 @@ export default function Edit () {
                     { value: 'Email', title: 'Email' },
                     ],
                     ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                    skin: 'oxide-dark',
+                    content_css: 'dark'
                 }}
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue={post.content}
+                
             />
-            <button>Submit</button>
         </form>
     )
 }

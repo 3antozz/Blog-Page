@@ -12,6 +12,7 @@ export default function Post () {
     const [post, setPost] = useState(null);
     const [comment, setComment] = useState("");
     const [success, setSuccess] = useState(false);
+    const [deleteSuccess, setDeleteSuccess] = useState(false);
     const [deleteError, setDeleteError] = useState("");
     const [error, setError] = useState(null);
     const handleInput = (e) => setComment(e.target.value)
@@ -40,9 +41,15 @@ export default function Post () {
             setError("");
             setComment("");
             setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);;
+            }, 8000)
         } catch(err) {
             setSuccess(false)
             setError(err.messages)
+            setTimeout(() => {
+                setError("");;
+            }, 8000)
             console.log(err);
         }
     }
@@ -63,12 +70,16 @@ export default function Post () {
             }
             setFetched(false);
             setDeleteError("");
-
+            setDeleteSuccess(true);
+            setTimeout(() => {
+                setDeleteSuccess(false);;
+            }, 8000)
         } catch(err) {
             setDeleteError(err.message);
             setTimeout(() => {
                 setDeleteError("");
             }, 8000)
+            setDeleteSuccess(false);
             console.log(err);
         }
     }
@@ -137,7 +148,7 @@ export default function Post () {
                 { user ? 
                     <form action="" method="post" onSubmit={handleSubmit}>
                     { error && error.map((error, index) => <li key={index}>{error}</li>) }
-                    { success && <li>Comment posted</li> }
+                    { success && <li className={styles.success}>Comment posted</li> }
                         <div>
                             <label htmlFor="comment" hidden>Comment:</label>
                             <textarea id="comment" value={comment} onChange={handleInput} placeholder="Leave a comment..."></textarea>
@@ -147,6 +158,7 @@ export default function Post () {
                     : <h2><Link to='/login'>Login to comment</Link></h2> }
                 </section>
                 {deleteError && <h3 className={styles.error}>{deleteError}</h3>  }
+                {deleteSuccess && <h3 className={styles.success}>Comment deleted </h3>  }
                 {post.comments.length > 0 ? post.comments.map((comment) => <Comment key={comment.id} comment={comment} user={user} onClick={handleCommentDelete} deleteError={deleteError}/>) : <h2>Be the first to comment on this post</h2>}
             </section>
         </div>

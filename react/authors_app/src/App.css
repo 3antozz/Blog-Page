@@ -13,7 +13,7 @@ main {
 }
 
 
-@media (max-width: 600px) {
+@media (max-width: 1000px) {
   main {
     padding: 2rem 0.3rem;
   }

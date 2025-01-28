@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { Search } from 'lucide-react';
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, Trash2, Pencil, Plus, Asterisk } from "lucide-react";
 export default function Posts () {
     const { posts, error, user, publishPost, deletePost } = useOutletContext();
     const [searchValue, setSearchValue] = useState("");
@@ -96,10 +96,13 @@ export default function Posts () {
         <>
             {publishError && <h3 className={styles.error}>{publishError}</h3>}
             {success && <h3 className={styles.success}>Post deleted successfully</h3>}
-            <div className={styles.search}>
-                <label htmlFor="search"></label>
-                <input type="text" id="search" value={searchValue} onChange={handleSearch} placeholder="Search for posts..." />
-                <Search className={styles.searchIcon} color="rgb(33, 33, 95)"/>
+            <div className={styles.top}>
+                <div  className={styles.search}>
+                    <label htmlFor="search"></label>
+                    <input type="text" id="search" value={searchValue} onChange={handleSearch} placeholder="Search for posts..." />
+                    <Search className={styles.searchIcon} color="rgb(33, 33, 95)"/>
+                </div>
+                <Link to='/posts/add' className={styles.add}><Plus /><p>Add Post</p></Link>
             </div>
             <h1 className={styles.blog}>Blog Posts</h1>
             <section className={styles.posts}>
@@ -114,12 +117,13 @@ function Post ({post, publishPost, deletePost}) {
     return (
         <section className={styles.post}>
             <section className={styles.container}>
+                <Asterisk className={styles.external}/>
                 <img src={post.cover_url ? post.cover_url : "/istockphoto-1351443977-612x612.jpg"} alt="" />
                 <Link to={`/posts/${post.id}`}>{post.title}</Link>
-                <p>{post.creationDate} by <em>{post.author.username}</em></p>
+                <p className={styles.date}>{post.creationDate} by <em>{post.author.username}</em></p>
                 <button onClick={() => publishPost(post.id)} className={post.published ? styles.published : styles.unpublished}>{post.published ? "Published" : "Not Published"}</button>
-                <button onClick={() => deletePost(post.id)} className={styles.delete}>Delete</button>
-                <Link to={`/posts/edit/${post.id}`}>Edit</Link>
+                <Link to={`/posts/edit/${post.id}`}><Pencil /></Link>
+                <button onClick={() => deletePost(post.id)} className={styles.delete}><Trash2 /></button>
             </section>
         </section>
     )

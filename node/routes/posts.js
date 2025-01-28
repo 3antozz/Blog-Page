@@ -6,9 +6,9 @@ const passport = require('passport');
 const {body, validationResult} = require('express-validator');
 
 const validateMessage= [
-    body("content").trim().notEmpty().withMessage("Comment must not be empty").bail().isLength({min: 3, max: 70}).withMessage("Comment must be between 3 and 70 characters"),
+    body("content").trim().notEmpty().withMessage("Comment must not be empty").bail().isLength({min: 3, max: 500}).withMessage("Comment must be between 3 and 500 characters"),
 ];
-const router = Router();
+const router = Router();                   
 
 
 
@@ -75,7 +75,7 @@ router.delete('/:postId/comments/:commentId', fn.checkAuth, asyncHandler(async(r
 
 router.post('/', fn.checkAdmin, asyncHandler(async(req, res) => {
     const { title, cover_url, content } = req.body;
-    const published = req.body.published === 'true';
+    const published = req.body.published === true;
     const post = await db.createPost(+req.user.id, title, published, cover_url, content);
     return res.json({post});
 }))
@@ -88,7 +88,7 @@ router.delete('/:postId', fn.checkAdmin, asyncHandler(async(req, res) => {
 
 router.put('/:postId', fn.checkAdmin, asyncHandler(async(req, res) => {
     const { title, cover_url, content } = req.body;
-    const published = req.body.published === 'true';
+    const published = req.body.published === true;
     const postId = req.params.postId;
     const post = await db.updatePost(+postId, title, published, cover_url, content);;
     return res.json({post});
