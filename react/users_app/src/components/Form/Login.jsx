@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useOutletContext, Link } from "react-router"
 export default function Login () {
@@ -8,10 +8,11 @@ export default function Login () {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    if (user) {
-        return navigate('/');
-    }
-
+    useEffect(() => {
+        if (user) {
+            return navigate('/');
+        }
+    })
     const handleUsername = (e) => setUsername(e.target.value);
     const handlePassword = (e) => setPassword(e.target.value);
 

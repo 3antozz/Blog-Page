@@ -35,11 +35,11 @@
 }
 
 
-.nav h1:hover, .login a:last-of-type:hover {
+.nav h1:hover, .login a:last-of-type:hover, .login a:first-of-type:hover {
     text-decoration: underline;
 }
 
-.login a:first-of-type {
+.login a:nth-of-type(2) {
     background: linear-gradient(135deg, rgb(0, 180, 200), rgb(0, 130, 180));
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
@@ -66,5 +66,11 @@
     }
     .nav h1 {
         font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .login a:first-of-type {
+        display: none;
     }
 }

@@ -10,7 +10,9 @@ export default function Posts () {
     const [searchValue, setSearchValue] = useState("");
     const [publishError, setPublishError] = useState("")
     const [success, setSuccess] = useState(false);
+    const [filter, setFilter] = useState("all");
     const handleSearch = (e) => setSearchValue(e.target.value)
+    console.log(filter);
     const switchPublishStatus = async (postId) => {
         try {
             const token = localStorage.getItem("cred");
@@ -88,6 +90,15 @@ export default function Posts () {
         )
     }
     const filteredPosts = posts.filter((post) => {
+        if (filter === "published") {
+            return post.published === true
+        }
+        if (filter === "unpublished") {
+            return post.published === false
+        }
+        return post;
+    })
+    const searchPosts = filteredPosts.filter((post) => {
         if(post.title.includes(searchValue) || post.content.includes(searchValue) || post.author.username.includes(searchValue)){
             return post;
         }
@@ -102,12 +113,20 @@ export default function Posts () {
                     <input type="text" id="search" value={searchValue} onChange={handleSearch} placeholder="Search for posts..." />
                     <Search className={styles.searchIcon} color="rgb(33, 33, 95)"/>
                 </div>
-                <Link to='/posts/add' className={styles.add}><Plus /><p>Add Post</p></Link>
+                <div className={styles.select}>
+                    <Link to='/posts/add' className={styles.add}><Plus /><p>Add Post</p></Link>
+                    <label htmlFor="filter">Filter:</label>
+                    <select name="" id="filter" defaultValue={"all"} onChange={(e) => setFilter(e.target.value)} >
+                        <option value="all" >All posts</option>
+                        <option value="published">Published</option>
+                        <option value="unpublished">Unpublished</option>
+                    </select>
+                </div>
             </div>
             <h1 className={styles.blog}>Blog Posts</h1>
             <section className={styles.posts}>
-                {(searchValue && filteredPosts.length === 0) && <h1>No post found</h1>}
-                {searchValue ? filteredPosts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) : posts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) }
+                {(searchValue && searchPosts.length === 0) && <h1>No post found</h1>}
+                {searchValue ? searchPosts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) : filteredPosts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) }
             </section>
         </>
     )

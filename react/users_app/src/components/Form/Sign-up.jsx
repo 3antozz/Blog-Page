@@ -1,5 +1,5 @@
 import { useNavigate, useOutletContext, Link } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Form.module.css"
 export default function SignUp () {
     let navigate = useNavigate();
@@ -10,9 +10,11 @@ export default function SignUp () {
     const [success, setSuccess] = useState(false);
     const [errors, setErrors] = useState([]);
 
-    if (user) {
-        return navigate('/');
-    }
+    useEffect(() => {
+        if (user) {
+            return navigate('/');
+        }
+    })
 
     const handleUsername = (e) => setUsername(e.target.value);
     const handlePassword = (e) => setPassword(e.target.value);

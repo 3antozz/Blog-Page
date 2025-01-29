@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useOutletContext, Link } from "react-router"
+import { useOutletContext } from "react-router"
 export default function Login () {
     const {setToken, user} = useOutletContext();
     let navigate = useNavigate();
@@ -8,9 +8,11 @@ export default function Login () {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    if (user) {
-        return navigate('/');
-    }
+    useEffect(() => {
+        if (user) {
+            return navigate('/');
+        }
+    })
 
     const handleUsername = (e) => setUsername(e.target.value);
     const handlePassword = (e) => setPassword(e.target.value);
@@ -55,7 +57,6 @@ export default function Login () {
                 <input type="password" id="password" onChange={handlePassword} value={password} />
             </div>
             <button>Log in</button>
-            <p>Don&apos;t have an account? <Link to='/sign-up'>Sign up here</Link></p>
         </form>
     )
 }

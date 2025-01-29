@@ -58,7 +58,7 @@ export default function Add () {
     }
       
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={styles.postForm}>
             { updateError && updateError.map((error, index) => <li key={index} className={styles.error}>{error}</li>) }
             { success && <li className={styles.success}>Post Added Successfully</li> }
             <div>
@@ -92,6 +92,8 @@ export default function Add () {
                     { value: 'Email', title: 'Email' },
                     ],
                     ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+                    skin: 'oxide-dark',
+                    content_css: 'dark'
                 }}
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue="Post Content"

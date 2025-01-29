@@ -13,16 +13,19 @@ export default function Navbar ({user, setUser, setToken}) {
     return (
         <nav className={styles.nav}>
             <Link to="/"><h1>Antuuuz Blog</h1></Link>
-            {user ?
             <div className={styles.login}>
-                <h3>{user.username}</h3>
-                <button onClick={handleLogout} className={styles.logout}>Logout</button>
-            </div> : 
-            <div className={styles.login}>
-                <Link to="/login">Login</Link>
-                <Link to="/sign-up">Register</Link>
+                <Link to="/login">Authors</Link>
+                {user ?
+                <>
+                    <h3>{user.username}</h3>
+                    <button onClick={handleLogout} className={styles.logout}>Logout</button>
+                </> :
+                <>
+                    <Link to="/login">Login</Link>
+                    <Link to="/sign-up">Register</Link>
+                </>
+                }
             </div>
-             }
         </nav>
     )
 }

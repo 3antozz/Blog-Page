@@ -162,7 +162,7 @@
 
 .success {
   position: fixed;
-  background-color: rgb(170, 51, 51);
+  background-color: green !important;
   padding: 1rem;
   border-radius: 15px;
   top: 15%;

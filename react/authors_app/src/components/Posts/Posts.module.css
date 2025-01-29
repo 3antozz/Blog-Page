@@ -95,7 +95,7 @@
 }
 
 .success {
-    background-color: green;
+    background-color: green !important;
 }
 
 .post a:not(:first-of-type):hover, .post button:hover {
@@ -143,6 +143,24 @@
     border-radius: 10px;
     font-weight: bold;
     color: white;
+    margin-right: 1rem;
+}
+
+.select {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.select select {
+    padding: 0.3rem;
+    border-radius: 10px;
+}
+
+.select label {
+    font-weight: bold;
+    margin-right: 0.2rem;
+    font-size: 1.1rem;
 }
 
 .blog {
@@ -199,5 +217,14 @@
     }
     .post a:not(:first-of-type), .post button {
         padding: 0.2rem 0.6rem;
+    }
+    .top {
+        flex-direction: column;
+    }
+    .search {
+        width: 100%;
+    }
+    .add {
+        align-self: center;
     }
 }
