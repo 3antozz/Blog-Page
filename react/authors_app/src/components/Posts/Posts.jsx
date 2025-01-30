@@ -84,7 +84,7 @@ export default function Posts () {
     }
     if (loading){
         return (
-            <div className="loading">
+            <div className={styles.loading}>
                 <LoaderCircle size={60} className="icon"/>
                 <p>This may take a while</p>
             </div>
@@ -92,9 +92,28 @@ export default function Posts () {
     }
     if (posts.length === 0){
         return (
-            <div className="loading">
-                <p>There are currently no posts!</p>
-            </div>
+            <>
+                <div className={styles.top}>
+                    <div  className={styles.search}>
+                        <label htmlFor="search"></label>
+                        <input type="text" id="search" value={searchValue} onChange={handleSearch} placeholder="Search for posts..." />
+                        <Search className={styles.searchIcon} color="rgb(33, 33, 95)"/>
+                    </div>
+                    <div className={styles.select}>
+                        <Link to='/posts/add' className={styles.add}><Plus /><p>Add Post</p></Link>
+                        <label htmlFor="filter">Filter:</label>
+                        <select name="" id="filter" defaultValue={"all"} onChange={(e) => setFilter(e.target.value)} >
+                            <option value="all" >All posts</option>
+                            <option value="published">Published</option>
+                            <option value="unpublished">Unpublished</option>
+                        </select>
+                    </div>
+                </div>
+                <h1 className={styles.blog}>Blog Posts</h1>
+                <section className={styles.posts}>
+                    <h2>There are currently no posts!</h2>
+                </section>
+            </>
         )
     }
     const filteredPosts = posts.filter((post) => {

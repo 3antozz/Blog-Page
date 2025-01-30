@@ -15,7 +15,7 @@ export default function Posts () {
     }
     if (loading){
         return (
-            <div className="loading">
+            <div className={styles.loading}>
                 <LoaderCircle size={60} className="icon"/>
                 <p>This may take a while</p>
             </div>
@@ -23,9 +23,19 @@ export default function Posts () {
     }
     if (posts.length === 0){
         return (
-            <div className="loading">
-                <p>There are currently no posts!</p>
-            </div>
+            <>
+                <section className={styles.intro}>
+                    <img src="/closeup-coding-html-programming-screen-laptop-development-web-developer_641010-43297.avif" alt="a laptop" />
+                    <div>
+                        <h1>Welcome to my Blog</h1>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi quia odit dolorem recusandae natus quae cumque iusto ab eligendi, blanditiis dolorum nulla, eveniet rerum corrupti fugiat exercitationem deserunt quam non.</p>
+                    </div>
+                </section>
+                <h1 className={styles.blog}>Blog Posts</h1>
+                <section className={styles.posts}>
+                    <h2>There are currently no posts!</h2>
+                </section>
+            </>
         )
     }
     return (
