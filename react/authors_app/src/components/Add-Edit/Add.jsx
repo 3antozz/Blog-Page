@@ -11,6 +11,7 @@ export default function Add () {
     const [published, setPublished] = useState(false);
     const [success, setSuccess] = useState(false);
     const [updateError, setError] = useState(null);
+    const [actionLoading, setActionLoading] = useState(false);
     const handleTitle = (e) => setTitle(e.target.value);
     const handleCover = (e) => setCoverURL(e.target.value);
     const handlePublished = () => setPublished(!published);
@@ -26,6 +27,7 @@ export default function Add () {
         e.preventDefault();
         const content = editorRef.current.getContent();
         try {
+            setActionLoading(true);
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts`, {
                 method: 'POST',
@@ -49,9 +51,11 @@ export default function Add () {
             }
             setError("");
             setSuccess(true);
+            setActionLoading(false);
             setFetched(false);
         } catch(err) {
             setSuccess(false)
+            setActionLoading(false);
             setError(err.messages)
             console.log(err);
         }
@@ -72,7 +76,7 @@ export default function Add () {
             <div className={styles.publish}>
                 <label htmlFor="published">Publish post?</label>
                 <input type="checkbox" id="published" onChange={handlePublished} />
-                <button>Create Post</button>
+                <button disabled={actionLoading}>{actionLoading ? 'Pending' : 'Create Post'}</button>
             </div>
             <Editor
                 apiKey={import.meta.env.VITE_TINY_API_KEY}

@@ -16,7 +16,7 @@ export default function Posts () {
     if (loading){
         return (
             <div className={styles.loading}>
-                <LoaderCircle size={60} className="icon"/>
+                <LoaderCircle size={60} className={styles.icon}/>
                 <p>This may take a while</p>
             </div>
         )

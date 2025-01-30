@@ -86,6 +86,10 @@
     font-weight: bold;
 }
 
+.postForm button:disabled {
+    background: linear-gradient(135deg, rgb(157, 157, 157), rgb(111, 111, 111));
+}
+
 .postForm button:hover {
     filter: brightness(1.2);
     transform: scale(1.25);

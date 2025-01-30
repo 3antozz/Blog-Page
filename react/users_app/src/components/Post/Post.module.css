@@ -62,9 +62,7 @@
 .form form button:disabled {
   background: linear-gradient(135deg, rgb(157, 157, 157), rgb(111, 111, 111));
 }
-/* .comment > button:disabled {
 
-} */
 
 .form h2 {
   text-align: center;

@@ -136,6 +136,11 @@ export default function Post () {
     }
     if (!post) {
         return(
+        loading ? 
+            <div className={styles.loading}>
+                <LoaderCircle size={60} className={styles.icon}/>
+                <p>This may take a while</p>
+            </div> :
             <div className={styles.loading}>
                 <h1>Post doesn&apos;t exist</h1>
                 <Link to="/"><h1>Go back</h1></Link>

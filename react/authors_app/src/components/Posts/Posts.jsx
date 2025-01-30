@@ -12,9 +12,11 @@ export default function Posts () {
     const [publishError, setPublishError] = useState("")
     const [success, setSuccess] = useState(false);
     const [filter, setFilter] = useState("all");
+    const [actionLoading, setActionLoading] = useState(false);
     const handleSearch = (e) => setSearchValue(e.target.value)
     const switchPublishStatus = async (postId) => {
         try {
+            setActionLoading(true);
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts/${postId}/publish`, {
                 method: 'PUT',
@@ -30,8 +32,10 @@ export default function Posts () {
             }
             publishPost(+postId)
             setPublishError("");
+            setActionLoading(false);
         } catch(err) {
             setPublishError(err.message);
+            setActionLoading(false);
             setTimeout(() => {
                 setPublishError("");
             }, 8000)
@@ -40,6 +44,7 @@ export default function Posts () {
     }
     const removePost = async (postId) => {
         try {
+            setActionLoading(true);
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts/${postId}`, {
                 method: 'DELETE',
@@ -53,6 +58,7 @@ export default function Posts () {
                 const error = new Error('Unexpected Error, please try again later');
                 throw error;
             }
+            setActionLoading(false);
             deletePost(+postId)
             setPublishError("");
             setSuccess(true);
@@ -60,6 +66,7 @@ export default function Posts () {
                 setSuccess(false);;
             }, 8000)
         } catch(err) {
+            setActionLoading(false);
             setPublishError(err.message);
             setTimeout(() => {
                 setPublishError("");
@@ -84,7 +91,7 @@ export default function Posts () {
     if (loading){
         return (
             <div className={styles.loading}>
-                <LoaderCircle size={60} className="icon"/>
+                <LoaderCircle size={60} className={styles.icon}/>
                 <p>This may take a while</p>
             </div>
         )
@@ -152,13 +159,13 @@ export default function Posts () {
             <h1 className={styles.blog}>Blog Posts</h1>
             <section className={styles.posts}>
                 {(searchValue && searchPosts.length === 0) && <h1>No post found</h1>}
-                {searchValue ? searchPosts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) : filteredPosts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) }
+                {searchValue ? searchPosts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus}/>) : filteredPosts.map((post) => <Post key={post.id} post={post} deletePost={removePost} publishPost={switchPublishStatus} pending={actionLoading}/>) }
             </section>
         </>
     )
 }
 
-function Post ({post, publishPost, deletePost}) {
+function Post ({post, publishPost, deletePost, pending}) {
     return (
         <section className={styles.post}>
             <section className={styles.container}>
@@ -166,9 +173,10 @@ function Post ({post, publishPost, deletePost}) {
                 <img src={post.cover_url ? post.cover_url : "/istockphoto-1351443977-612x612.jpg"} alt="" />
                 <Link to={`/posts/${post.id}`}>{post.title}</Link>
                 <p className={styles.date}>{post.creationDate} by <em>{post.author.username}</em></p>
-                <button onClick={() => publishPost(post.id)} className={post.published ? styles.published : styles.unpublished}>{post.published ? "Published" : "Not Published"}</button>
+                <button disabled={pending} onClick={() => publishPost(post.id)} className={post.published ? styles.published : styles.unpublished}>{
+                 pending ? <LoaderCircle className={styles.icon} /> : post.published ? "Published" : "Not Published"}</button>
                 <Link to={`/posts/edit/${post.id}`}><Pencil /></Link>
-                <button onClick={() => deletePost(post.id)} className={styles.delete}><Trash2 /></button>
+                <button disabled={pending} onClick={() => deletePost(post.id)} className={styles.delete}>{pending ? <LoaderCircle className={styles.icon}/> : <Trash2 />}</button>
             </section>
         </section>
     )
@@ -179,6 +187,7 @@ Post.propTypes = {
     post: PropTypes.object.isRequired,
     publishPost: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
+    pending: PropTypes.bool.isRequired 
 }
 
 

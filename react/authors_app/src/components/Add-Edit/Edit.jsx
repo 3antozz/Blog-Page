@@ -16,6 +16,7 @@ export default function Edit () {
     const [published, setPublished] = useState(post ? post.published : false);
     const [success, setSuccess] = useState(false);
     const [updateError, setError] = useState(null);
+    const [actionLoading, setActionLoading] = useState(false);
     const handleTitle = (e) => setTitle(e.target.value);
     const handleCover = (e) => setCoverURL(e.target.value);
     const handlePublished = () => setPublished(!published);
@@ -54,6 +55,7 @@ export default function Edit () {
         e.preventDefault();
         const content = editorRef.current.getContent();
         try {
+            setActionLoading(true);
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts/${postId}`, {
                 method: 'PUT',
@@ -78,8 +80,10 @@ export default function Edit () {
             setFetched(false)
             setError("");
             setSuccess(true);
+            setActionLoading(false);
         } catch(err) {
             setSuccess(false)
+            setActionLoading(false);
             setError(err.messages)
             console.log(err);
         }
@@ -100,7 +104,7 @@ export default function Edit () {
             <div className={styles.publish}>
                 <label htmlFor="published">Publish post?</label>
                 <input type="checkbox" id="published" checked={published} onChange={handlePublished} />
-                <button>Update Post</button>
+                <button disabled={actionLoading}>{actionLoading ? 'Pending' : 'Update Post'}</button>
             </div>
             <Editor
                 apiKey={import.meta.env.VITE_TINY_API_KEY}

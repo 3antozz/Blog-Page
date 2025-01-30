@@ -16,11 +16,13 @@ export default function Post () {
     const [deleteSuccess, setDeleteSuccess] = useState(false);
     const [deleteError, setDeleteError] = useState("");
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [actionLoading, setActionLoading] = useState(false);
     const handleInput = (e) => setComment(e.target.value)
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
+            setActionLoading(true);
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts/${postId}/comments`, {
                 method: 'POST',
@@ -43,12 +45,14 @@ export default function Post () {
             setError("");
             setComment("");
             setSuccess(true);
+            setActionLoading(false);
             setTimeout(() => {
                 setSuccess(false);;
             }, 8000)
         } catch(err) {
             setSuccess(false)
             setError(err.messages)
+            setActionLoading(false);
             setTimeout(() => {
                 setError("");;
             }, 8000)
@@ -57,6 +61,7 @@ export default function Post () {
     }
     const handleCommentDelete = async (commentId) => {
         try {
+            setActionLoading(true);
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts/${postId}/comments/${commentId}`, {
                 method: 'DELETE',
@@ -73,6 +78,7 @@ export default function Post () {
             setFetched(false)
             setDeleteError("");
             setDeleteSuccess(true);
+            setActionLoading(false);
             setTimeout(() => {
                 setDeleteSuccess(false);;
             }, 8000)
@@ -82,6 +88,7 @@ export default function Post () {
                 setDeleteError("");
             }, 8000)
             setDeleteSuccess(false);
+            setActionLoading(false);
             console.log(err);
         }
     }
@@ -134,16 +141,13 @@ export default function Post () {
         </div>
     )
     }
-    if (loading) {
+    if (!post) {
         return(
+        loading ? 
             <div className={styles.loading}>
                 <LoaderCircle size={60} className={styles.icon}/>
                 <p>This may take a while</p>
-            </div>
-        )
-    }
-    if (!post) {
-        return(
+            </div> :
             <div className={styles.loading}>
                 <h1>Post doesn&apos;t exist</h1>
                 <Link to="/"><h1>Go back</h1></Link>
@@ -157,9 +161,9 @@ export default function Post () {
                 <h1>{post.title}</h1>
                 <p className={styles.info}>Written by <em>{post.author.username}</em> on {post.creationDate}</p>
                 {post.cover_url && <img src={post.cover_url} alt={post.title} /> }
-                <p className={styles.content}>
+                <div className={styles.content}>
                     {parse(cleanContent)}
-                </p>
+                </div>
             </section>
             <section className={styles.comments}>
                 <h1>Comments</h1>
@@ -172,20 +176,24 @@ export default function Post () {
                             <label htmlFor="comment" hidden>Comment:</label>
                             <textarea id="comment" value={comment} onChange={handleInput} placeholder="Leave a comment..."></textarea>
                         </div>
-                        <button>Submit</button>
+                        <button disabled={actionLoading}>{actionLoading ? 'Pending' : 'Post Comment'}</button>
                     </form>
                     : <h2><Link to='/login'>Login to comment</Link></h2> }
                 </section>
                 {deleteError && <h3 className={styles.error}>{deleteError}</h3>  }
                 {deleteSuccess && <h3 className={styles.success}>Comment deleted </h3>  }
-                {post.comments.length > 0 ? post.comments.map((comment) => <Comment key={comment.id} comment={comment} user={user} onClick={handleCommentDelete} deleteError={deleteError}/>) : <h2>Be the first to comment on this post</h2>}
+                {loading ? <div className={styles.loading}>
+                <LoaderCircle size={60} className={styles.icon}/>
+                <p>This may take a while</p>
+                </div> :
+                post.comments.length > 0 ? post.comments.map((comment) => <Comment key={comment.id} comment={comment} user={user} onClick={handleCommentDelete} pending={actionLoading}/>) : <h2>Be the first to comment on this post</h2>}
             </section>
         </div>
     )
 }
 
 
-function Comment ({ comment, user, onClick}) {
+function Comment ({ comment, user, onClick, pending}) {
     return (
         <div className={styles.comment}>
             <CircleUser size={45}/>
@@ -193,7 +201,8 @@ function Comment ({ comment, user, onClick}) {
                 <h4><em>{comment.author.username}</em></h4>
                 <p>{comment.content}</p>
             </div>
-            {(user && user.isAdmin) && <button onClick={() => onClick(comment.id)}><Trash size={28}  color="white"/></button>}
+            {(user && user.username === comment.author.username) && <button disabled={pending} onClick={() => onClick(comment.id)}>
+                {!pending ? <Trash size={28}  color="white"/> : <LoaderCircle size={35} color="white" className={styles.icon}/>} </button>}
         </div>
     )
 }
@@ -204,4 +213,5 @@ Comment.propTypes = {
     comment: PropTypes.object.isRequired,
     user: PropTypes.object,
     onClick: PropTypes.func.isRequired,
+    pending: PropTypes.bool.isRequired
 }

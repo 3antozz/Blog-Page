@@ -37,13 +37,11 @@
     border: none;
     color: white;
     flex-grow: 0;
-    margin-top: 0.5rem;
     transition: transform 200ms ease;
 }
 
 .icon {
     animation: 800ms linear 0s infinite loading;
-    margin-bottom: 0.5rem;
 }
 
 .loading p {
