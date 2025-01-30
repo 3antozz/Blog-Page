@@ -6,26 +6,30 @@ var cors = require('cors')
 
 const app = express();
 const allowedOrigins = [
-    'https://blog-page-three-eta.vercel.app/',
-    'https://authors-page.vercel.app/',
+    'https://blog-page-three-eta.vercel.app',
+    'https://authors-page.vercel.app',
 ];
-  
-app.use(cors({
-    origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+const corsOptions = {
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
-    } else {
+      } else {
         callback(new Error('Not allowed by CORS'));
-    }
+      }
     },
     optionsSuccessStatus: 200
-})
-);
-app.options('*', cors())
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors((corsOptions)))
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+app.use((req, res, next) => {
+    console.log('Request Origin:', req.headers.origin);
+    next();
+});
 app.use('/', router);
 app.use((req, res, next) => {
     const error = new Error('404 Not Found')
