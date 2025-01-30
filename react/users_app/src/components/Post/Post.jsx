@@ -93,9 +93,6 @@ export default function Post () {
         }
     }
     useEffect(() => {
-        console.log('component mounted')
-    }, [])
-    useEffect(() => {
         let ignore = false;
         if(!isFetched) {
             setLoading(true);
@@ -137,14 +134,6 @@ export default function Post () {
         </div>
     )
     }
-    if (loading) {
-        return(
-            <div className={styles.loading}>
-                <LoaderCircle size={60} className={styles.icon}/>
-                <p>This may take a while</p>
-            </div>
-        )
-    }
     if (!post) {
         return(
             <div className={styles.loading}>
@@ -181,7 +170,11 @@ export default function Post () {
                 </section>
                 {deleteError && <h3 className={styles.error}>{deleteError}</h3>  }
                 {deleteSuccess && <h3 className={styles.success}>Comment deleted </h3>  }
-                {post.comments.length > 0 ? post.comments.map((comment) => <Comment key={comment.id} comment={comment} user={user} onClick={handleCommentDelete} pending={actionLoading}/>) : <h2>Be the first to comment on this post</h2>}
+                {loading ? <div className={styles.loading}>
+                <LoaderCircle size={60} className={styles.icon}/>
+                <p>This may take a while</p>
+                </div> :
+                post.comments.length > 0 ? post.comments.map((comment) => <Comment key={comment.id} comment={comment} user={user} onClick={handleCommentDelete} pending={actionLoading}/>) : <h2>Be the first to comment on this post</h2>}
             </section>
         </div>
     )
@@ -196,7 +189,8 @@ function Comment ({ comment, user, onClick, pending}) {
                 <h4><em>{comment.author.username}</em></h4>
                 <p>{comment.content}</p>
             </div>
-            {(user && user.username === comment.author.username) && <button disabled={pending} onClick={() => onClick(comment.id)}><Trash size={28}  color="white"/></button>}
+            {(user && user.username === comment.author.username) && <button disabled={pending} onClick={() => onClick(comment.id)}>
+                {!pending ? <Trash size={28}  color="white"/> : <LoaderCircle size={35} color="white" className={styles.icon}/>} </button>}
         </div>
     )
 }
