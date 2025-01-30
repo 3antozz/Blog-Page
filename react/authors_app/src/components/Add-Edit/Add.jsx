@@ -2,6 +2,7 @@ import styles from "./Edit.module.css"
 import { Editor } from "@tinymce/tinymce-react"
 import { useState, useRef } from "react"
 import { useOutletContext } from "react-router";
+const API_URL = import.meta.env.VITE_API_URL;
 export default function Add () {
     const editorRef = useRef(null);
     const { user, setFetched } = useOutletContext();
@@ -27,7 +28,7 @@ export default function Add () {
         console.log(content);
         try {
             const token = localStorage.getItem("cred");
-            const request = await fetch(`http://localhost:3000/posts`, {
+            const request = await fetch(`${API_URL}/posts`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useOutletContext, Link } from "react-router"
+const API_URL = import.meta.env.VITE_API_URL;
 export default function Login () {
     const {setToken, user} = useOutletContext();
     let navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Login () {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const request = await fetch('http://localhost:3000/login', {
+            const request = await fetch(`${API_URL}/login`, {
                 method: 'post',
                 headers: {
                     "Content-Type": "application/json",

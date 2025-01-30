@@ -5,6 +5,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { Search } from 'lucide-react';
 import { LoaderCircle, Trash2, Pencil, Plus, Asterisk } from "lucide-react";
+const API_URL = import.meta.env.VITE_API_URL;
 export default function Posts () {
     const { posts, error, user, publishPost, deletePost } = useOutletContext();
     const [searchValue, setSearchValue] = useState("");
@@ -16,7 +17,7 @@ export default function Posts () {
     const switchPublishStatus = async (postId) => {
         try {
             const token = localStorage.getItem("cred");
-            const request = await fetch(`http://localhost:3000/posts/${postId}/publish`, {
+            const request = await fetch(`${API_URL}/posts/${postId}/publish`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -41,7 +42,7 @@ export default function Posts () {
     const removePost = async (postId) => {
         try {
             const token = localStorage.getItem("cred");
-            const request = await fetch(`http://localhost:3000/posts/${postId}`, {
+            const request = await fetch(`${API_URL}/posts/${postId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`,

@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
+const API_URL = import.meta.env.VITE_API_URL;
 function App() {
     const [isFetched, setFetched] = useState(false)
     const [posts, setPosts] = useState([]);
@@ -29,7 +30,7 @@ function App() {
         const fetchUser = async () => {
             if(token) {
                 try {
-                    const request = await fetch("http://localhost:3000/user", {
+                    const request = await fetch(`${API_URL}/user`, {
                         method: 'GET',
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -54,7 +55,7 @@ function App() {
         if (!isFetched) {
             const fetchPosts = async () => {
                 try {
-                    const request = await fetch("http://localhost:3000/posts/all", {
+                    const request = await fetch(`${API_URL}/posts/all`, {
                         method: 'GET',
                         headers: {
                             Authorization: `Bearer ${token}`

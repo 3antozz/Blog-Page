@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { LoaderCircle, CircleUser, Trash } from 'lucide-react';
 import DOMPurify from 'dompurify';
 import parse from 'html-react-parser';
+const API_URL = import.meta.env.VITE_API_URL;
 export default function Post () {
     const { postId } = useParams();
     const {user} = useOutletContext();
@@ -20,7 +21,7 @@ export default function Post () {
         e.preventDefault();
         try {
             const token = localStorage.getItem("cred");
-            const request = await fetch(`http://localhost:3000/posts/${postId}/comments`, {
+            const request = await fetch(`${API_URL}/posts/${postId}/comments`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -56,7 +57,7 @@ export default function Post () {
     const handleCommentDelete = async (commentId) => {
         try {
             const token = localStorage.getItem("cred");
-            const request = await fetch(`http://localhost:3000/posts/${postId}/comments/${commentId}`, {
+            const request = await fetch(`${API_URL}/posts/${postId}/comments/${commentId}`, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -88,7 +89,7 @@ export default function Post () {
         if(!isFetched) {
             const fetchPosts = async () => {
                 try {
-                    const request = await fetch(`http://localhost:3000/posts/${postId}`,
+                    const request = await fetch(`${API_URL}/posts/${postId}`,
                     {
                         method: "GET",
                         mode: "cors",

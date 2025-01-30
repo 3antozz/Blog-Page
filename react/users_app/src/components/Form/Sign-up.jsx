@@ -1,6 +1,7 @@
 import { useNavigate, useOutletContext, Link } from "react-router";
 import { useState, useEffect } from "react";
 import styles from "./Form.module.css"
+const API_URL = import.meta.env.VITE_API_URL;
 export default function SignUp () {
     let navigate = useNavigate();
     const {user} = useOutletContext();
@@ -23,7 +24,7 @@ export default function SignUp () {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const request = await fetch('http://localhost:3000/sign-up', {
+            const request = await fetch(`${API_URL}/sign-up`, {
                 method: 'post',
                 headers: {
                     "Content-Type": "application/json",

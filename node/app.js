@@ -5,7 +5,22 @@ var cors = require('cors')
 
 
 const app = express();
-app.use(cors())
+const allowedOrigins = [
+    'https://admin-frontend.vercel.app',
+    'https://user-frontend.vercel.app',
+];
+  
+app.use(cors({
+    origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+    } else {
+        callback(new Error('Not allowed by CORS'));
+    }
+    },
+    optionsSuccessStatus: 200
+})
+);
 app.options('*', cors())
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json())

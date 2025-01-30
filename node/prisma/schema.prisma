@@ -21,6 +21,8 @@ model User {
     isAdmin   Boolean @default(false)
     posts     Post[]
     comments  Comment[]
+
+    @@map("blog_users")
 }
 
 model Post {
@@ -33,6 +35,8 @@ model Post {
     author        User      @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     authorId      Int 
     comments      Comment[]  
+
+    @@map("blog_posts")
 }
 
 model Comment {
@@ -43,4 +47,6 @@ model Comment {
     postId        Int 
     author        User      @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     authorId      Int   
+
+    @@map("blog_comments")
 }

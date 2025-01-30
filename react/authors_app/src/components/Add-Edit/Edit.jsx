@@ -3,6 +3,7 @@ import { Editor } from "@tinymce/tinymce-react"
 import { useState, useRef, useMemo } from "react"
 import { useParams, useOutletContext, Link } from "react-router";
 import { LoaderCircle } from "lucide-react";
+const API_URL = import.meta.env.VITE_API_URL;
 export default function Edit () {
     const editorRef = useRef(null);
     const { postId } = useParams();
@@ -55,7 +56,7 @@ export default function Edit () {
         console.log(content);
         try {
             const token = localStorage.getItem("cred");
-            const request = await fetch(`http://localhost:3000/posts/${postId}`, {
+            const request = await fetch(`${API_URL}/posts/${postId}`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,

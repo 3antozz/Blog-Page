@@ -3,6 +3,7 @@ import { useOutletContext } from "react-router";
 import { Link } from "react-router";
 import PropTypes from "prop-types";
 import { LoaderCircle } from 'lucide-react';
+
 export default function Posts () {
     const { posts } = useOutletContext();
     if (posts.length === 0) {

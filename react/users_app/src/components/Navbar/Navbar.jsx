@@ -1,6 +1,7 @@
 import styles from "./Navbar.module.css"
 import PropTypes from "prop-types"
 import { Link, useNavigate, useLocation } from "react-router"
+const AUTHORS_URL = import.meta.env.VITE_AUTHORS_URL;
 export default function Navbar ({user, setUser, setToken}) {
     const navigate = useNavigate();
     const location = useLocation();
@@ -14,7 +15,7 @@ export default function Navbar ({user, setUser, setToken}) {
         <nav className={styles.nav}>
             <Link to="/"><h1>Antuuuz Blog</h1></Link>
             <div className={styles.login}>
-                <Link to="/login">Authors</Link>
+                <Link to={AUTHORS_URL}>Authors</Link>
                 {user ?
                 <>
                     <h3>{user.username}</h3>
