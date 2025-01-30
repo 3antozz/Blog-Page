@@ -6,8 +6,8 @@ var cors = require('cors')
 
 const app = express();
 const allowedOrigins = [
-    'https://admin-frontend.vercel.app',
-    'https://user-frontend.vercel.app',
+    'https://blog-page-three-eta.vercel.app/',
+    'https://authors-page.vercel.app/',
 ];
   
 app.use(cors({
