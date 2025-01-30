@@ -9,7 +9,7 @@ function App() {
     const [user, setUser] = useState(null);
     const [error, setError] = useState("")
     const [token, setToken] = useState(localStorage.getItem("cred"));
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         const fetchUser = async () => {
             if(token) {
@@ -54,7 +54,6 @@ function App() {
                         setError("")
                         setLoading(false)
                     }
-                    console.log(response);
                 } catch (err) {
                     setLoading(false)
                     setError(err.message);

@@ -21,7 +21,6 @@ export default function Post () {
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
-            setLoading(true);
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts/${postId}/comments`, {
                 method: 'POST',
@@ -44,14 +43,12 @@ export default function Post () {
             setError("");
             setComment("");
             setSuccess(true);
-            setLoading(false)
             setTimeout(() => {
                 setSuccess(false);;
             }, 8000)
         } catch(err) {
             setSuccess(false)
             setError(err.messages)
-            setLoading(false)
             setTimeout(() => {
                 setError("");;
             }, 8000)
@@ -91,6 +88,7 @@ export default function Post () {
     useEffect(() => {
         let ignore = false;
         if(!isFetched) {
+            setLoading(true);
             const fetchPosts = async () => {
                 try {
                     const request = await fetch(`${API_URL}/posts/${postId}`,
@@ -105,11 +103,12 @@ export default function Post () {
                     if(!ignore) {
                         setPost(response.post)
                         setFetched(true);
+                        setLoading(false)
                     }
-                    console.log(response);
                 } catch (err) {
                     if(!ignore) {
                         setError(err);
+                        setLoading(false)
                     }
                     console.log(err)
                 }

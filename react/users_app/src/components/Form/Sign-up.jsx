@@ -37,7 +37,6 @@ export default function SignUp () {
                 })
             })
             const response = await request.json();
-            console.log(response);
             if (!request.ok) {
                 const error = new Error('Incorrect information');
                 error.messages = response.errors || [error.message];

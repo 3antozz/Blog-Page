@@ -8,6 +8,7 @@ const app = express();
 const allowedOrigins = [
     'https://blog-page-three-eta.vercel.app',
     'https://authors-page.vercel.app',
+    'http://localhost:5173'
 ];
 const corsOptions = {
     origin: (origin, callback) => {
@@ -26,10 +27,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
-app.use((req, res, next) => {
-    console.log('Request Origin:', req.headers.origin);
-    next();
-});
 app.use('/', router);
 app.use((req, res, next) => {
     const error = new Error('404 Not Found')

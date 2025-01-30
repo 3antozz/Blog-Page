@@ -25,7 +25,6 @@ export default function Add () {
     const handleSubmit = async(e) => {
         e.preventDefault();
         const content = editorRef.current.getContent();
-        console.log(content);
         try {
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts`, {
@@ -39,10 +38,10 @@ export default function Add () {
                     title: titleInput,
                     cover_url: coverURL,
                     content,
+                    published
                 })
             })
             const response = await request.json();
-            console.log(response);
             if (!request.ok) {
                 const error = new Error('Invalid Request');
                 error.messages = response.errors || [error.message];

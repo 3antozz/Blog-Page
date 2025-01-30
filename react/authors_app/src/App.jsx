@@ -73,7 +73,7 @@ function App() {
                         setError("")
                         setLoading(false)
                     }
-                    console.log(response);
+
                 } catch (err) {
                     setError(err.message);
                     setLoading(false)

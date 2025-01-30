@@ -53,7 +53,6 @@ export default function Edit () {
     const handleSubmit = async(e) => {
         e.preventDefault();
         const content = editorRef.current.getContent();
-        console.log(content);
         try {
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts/${postId}`, {
@@ -71,7 +70,6 @@ export default function Edit () {
                 })
             })
             const response = await request.json();
-            console.log(response);
             if (!request.ok) {
                 const error = new Error('Invalid Request');
                 error.messages = response.errors || [error.message];

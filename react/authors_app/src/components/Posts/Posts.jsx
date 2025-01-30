@@ -13,7 +13,6 @@ export default function Posts () {
     const [success, setSuccess] = useState(false);
     const [filter, setFilter] = useState("all");
     const handleSearch = (e) => setSearchValue(e.target.value)
-    console.log(filter);
     const switchPublishStatus = async (postId) => {
         try {
             const token = localStorage.getItem("cred");
