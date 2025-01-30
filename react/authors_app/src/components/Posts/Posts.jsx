@@ -7,7 +7,7 @@ import { Search } from 'lucide-react';
 import { LoaderCircle, Trash2, Pencil, Plus, Asterisk } from "lucide-react";
 const API_URL = import.meta.env.VITE_API_URL;
 export default function Posts () {
-    const { posts, error, user, publishPost, deletePost } = useOutletContext();
+    const { posts, loading, error, user, publishPost, deletePost } = useOutletContext();
     const [searchValue, setSearchValue] = useState("");
     const [publishError, setPublishError] = useState("")
     const [success, setSuccess] = useState(false);
@@ -82,11 +82,18 @@ export default function Posts () {
         </div>
         )
     }
-    if (posts.length === 0){
+    if (loading){
         return (
             <div className="loading">
                 <LoaderCircle size={60} className="icon"/>
                 <p>This may take a while</p>
+            </div>
+        )
+    }
+    if (posts.length === 0){
+        return (
+            <div className="loading">
+                <p>There are currently no posts!</p>
             </div>
         )
     }

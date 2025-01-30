@@ -7,7 +7,9 @@ function App() {
     const [isFetched, setFetched] = useState(false)
     const [posts, setPosts] = useState([]);
     const [user, setUser] = useState(null);
+    const [error, setError] = useState("")
     const [token, setToken] = useState(localStorage.getItem("cred"));
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         const fetchUser = async () => {
             if(token) {
@@ -35,6 +37,7 @@ function App() {
     useEffect(() => {
         let ignore = false;
         if (!isFetched) {
+            setLoading(true);
             const fetchPosts = async () => {
                 try {
                     const request = await fetch(`${API_URL}/posts`, {
@@ -48,10 +51,15 @@ function App() {
                     if (!ignore) {
                         setPosts(response.posts)
                         setFetched(true);
+                        setError("")
+                        setLoading(false)
                     }
                     console.log(response);
                 } catch (err) {
+                    setLoading(false)
+                    setError(err.message);
                     console.log(err)
+
                 }
             };
             fetchPosts();
@@ -64,7 +72,7 @@ function App() {
         <>
             <Navbar user={user} setUser={setUser} setToken={setToken}/>
             <main>
-                <Outlet context={{posts, user, setToken}}/>
+                <Outlet context={{posts, user, loading, error, setToken}}/>
             </main>
         </>
     );

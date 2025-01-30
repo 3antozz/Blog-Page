@@ -9,7 +9,7 @@ function App() {
     const [error, setError] = useState("")
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("cred"));
-
+    const [loading, setLoading] = useState(false)
     const publishPost = (postId) => {
         setPosts((prev) => {
             return prev.map((post) => {
@@ -55,6 +55,7 @@ function App() {
         if (!isFetched) {
             const fetchPosts = async () => {
                 try {
+                    setLoading(true);
                     const request = await fetch(`${API_URL}/posts/all`, {
                         method: 'GET',
                         headers: {
@@ -70,10 +71,12 @@ function App() {
                         setPosts(response.posts)
                         setFetched(true);
                         setError("")
+                        setLoading(false)
                     }
                     console.log(response);
                 } catch (err) {
                     setError(err.message);
+                    setLoading(false)
                     console.log(err)
                 }
             };
@@ -87,7 +90,7 @@ function App() {
         <>
             <Navbar user={user} setUser={setUser} setToken={setToken}/>
             <main>
-                <Outlet context={{posts, user, setToken, setFetched, error, publishPost, deletePost}}/>
+                <Outlet context={{posts, user, setToken, setFetched, loading, error, publishPost, deletePost}}/>
             </main>
         </>
     );

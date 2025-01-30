@@ -16,10 +16,12 @@ export default function Post () {
     const [deleteSuccess, setDeleteSuccess] = useState(false);
     const [deleteError, setDeleteError] = useState("");
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false)
     const handleInput = (e) => setComment(e.target.value)
     const handleSubmit = async(e) => {
         e.preventDefault();
         try {
+            setLoading(true);
             const token = localStorage.getItem("cred");
             const request = await fetch(`${API_URL}/posts/${postId}/comments`, {
                 method: 'POST',
@@ -42,12 +44,14 @@ export default function Post () {
             setError("");
             setComment("");
             setSuccess(true);
+            setLoading(false)
             setTimeout(() => {
                 setSuccess(false);;
             }, 8000)
         } catch(err) {
             setSuccess(false)
             setError(err.messages)
+            setLoading(false)
             setTimeout(() => {
                 setError("");;
             }, 8000)
@@ -131,11 +135,19 @@ export default function Post () {
         </div>
     )
     }
-    if (!post) {
+    if (loading) {
         return(
             <div className={styles.loading}>
                 <LoaderCircle size={60} className={styles.icon}/>
                 <p>This may take a while</p>
+            </div>
+        )
+    }
+    if (!post) {
+        return(
+            <div className={styles.loading}>
+                <h1>Post doesn&apos;t exist</h1>
+                <Link to="/"><h1>Go back</h1></Link>
             </div>
         )
     }

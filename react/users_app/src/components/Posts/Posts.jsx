@@ -5,13 +5,27 @@ import PropTypes from "prop-types";
 import { LoaderCircle } from 'lucide-react';
 
 export default function Posts () {
-    const { posts } = useOutletContext();
-    if (posts.length === 0) {
+    const { posts, loading, error } = useOutletContext();
+    if (error) {
         return (
         <div className={styles.loading}>
-            <LoaderCircle size={60} className={styles.icon}/>
-            <p>This may take a while</p>
+            <h1>{error || "Unexpected Error occured, please try again later."}</h1>
         </div>
+        )
+    }
+    if (loading){
+        return (
+            <div className="loading">
+                <LoaderCircle size={60} className="icon"/>
+                <p>This may take a while</p>
+            </div>
+        )
+    }
+    if (posts.length === 0){
+        return (
+            <div className="loading">
+                <p>There are currently no posts!</p>
+            </div>
         )
     }
     return (
