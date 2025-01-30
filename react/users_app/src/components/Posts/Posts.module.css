@@ -24,7 +24,8 @@
 
 .posts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    justify-items: center;
     gap: 1rem;
 }
 
@@ -38,7 +39,7 @@
     padding: 1rem;
     border: 2px solid rgba(96, 96, 241, 0.827);
     border-radius: 15px;
-    max-width: 25rem;
+    max-width: 30rem;
 }
 
 .post a {

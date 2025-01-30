@@ -185,7 +185,7 @@
     .date {
         display: none;
     }
-    svg {
+    .post svg {
         width: 1.2rem;
     }
     .post a:not(:first-of-type), .post button {
@@ -210,7 +210,7 @@
     .external {
         display: block;
     }
-    svg {
+    .post svg {
         width: 1rem;
     }
     .post a:not(:first-of-type), .post button {

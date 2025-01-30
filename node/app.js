@@ -6,7 +6,7 @@ var cors = require('cors')
 
 const app = express();
 const allowedOrigins = [
-    'https://blog-page-three-eta.vercel.app',
+    'https://blog-page.vercel.app',
     'https://authors-page.vercel.app',
     'http://localhost:5173'
 ];
