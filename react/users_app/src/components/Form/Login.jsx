@@ -50,11 +50,11 @@ export default function Login () {
             { error && <li>{error}</li> }
             <div>
                 <label htmlFor="username">Username</label>
-                <input type="text" id="username" onChange={handleUsername} value={username} />
+                <input type="text" id="username" onChange={handleUsername} value={username} minLength={3} maxLength={20} required />
             </div>
             <div>
                 <label htmlFor="password">Password</label>
-                <input type="password" id="password" onChange={handlePassword} value={password} />
+                <input type="password" id="password" onChange={handlePassword} value={password} required />
             </div>
             <button>Log in</button>
             <p>Don&apos;t have an account? <Link to='/sign-up'>Sign up here</Link></p>

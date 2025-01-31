@@ -95,7 +95,7 @@ export default function Edit () {
             { success && <li className={styles.success}>Post Updated Successfully</li> }
             <div>
                 <label htmlFor="title">Title</label>
-                <input type="text" id="title" value={titleInput} onChange={handleTitle} />
+                <input type="text" id="title" value={titleInput} onChange={handleTitle} required />
             </div>
             <div>
                 <label htmlFor="cover_url">Cover image url</label>

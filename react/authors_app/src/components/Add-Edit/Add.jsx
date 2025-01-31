@@ -67,7 +67,7 @@ export default function Add () {
             { success && <li className={styles.success}>Post Added Successfully</li> }
             <div>
                 <label htmlFor="title">Title</label>
-                <input type="text" id="title" onChange={handleTitle} />
+                <input type="text" id="title" onChange={handleTitle} required />
             </div>
             <div>
                 <label htmlFor="cover_url">Cover image url</label>

@@ -167,7 +167,7 @@ export default function Post () {
                     { success && <li className={styles.success}>Comment posted</li> }
                         <div>
                             <label htmlFor="comment" hidden>Comment:</label>
-                            <textarea id="comment" value={comment} onChange={handleInput} placeholder="Leave a comment..."></textarea>
+                            <textarea id="comment" value={comment} onChange={handleInput} placeholder="Leave a comment..." required minLength={3} maxLength={500}></textarea>
                         </div>
                         <button disabled={actionLoading}>{actionLoading ? 'Pending' : 'Post Comment'}</button>
                     </form>

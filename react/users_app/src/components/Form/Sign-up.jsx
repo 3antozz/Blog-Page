@@ -60,16 +60,16 @@ export default function SignUp () {
             { errors && errors.map((error, index) => <li key={index}>{error}</li>) }
             { success && <li className={styles.success}>Registration successful! You can login <Link to="/login">here</Link></li> }
             <div>
-                <label htmlFor="username">Username</label>
-                <input type="text" id="username" onChange={handleUsername} value={username} />
+                <label htmlFor="username">* Username</label>
+                <input type="text" id="username" onChange={handleUsername} value={username} minLength={3} maxLength={20} required />
             </div>
             <div>
-                <label htmlFor="password">Password</label>
-                <input type="password" id="password" onChange={handlePassword} value={password} />
+                <label htmlFor="password">* Password</label>
+                <input type="password" id="password" onChange={handlePassword} value={password} minLength={6} required />
             </div>
             <div>
-                <label htmlFor="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" onChange={handlePasswordConfirmation} value={confirmPassword} />
+                <label htmlFor="confirm_password">* Confirm Password</label>
+                <input type="password" id="confirm_password" onChange={handlePasswordConfirmation} value={confirmPassword} required />
             </div>
             <button>Sign Up</button>
             <p>Already have an account? <Link to='/login'>Login here</Link></p>
