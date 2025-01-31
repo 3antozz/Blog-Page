@@ -91,9 +91,6 @@
   margin-bottom: 0.5rem;
 }
 
-.comment svg {
-  align-self: flex-start;
-}
 
 .comment > div {
   flex: 1;
@@ -203,8 +200,5 @@
   }
   .form form textarea {
     font-size: 1rem;
-  }
-  .comment svg {
-    align-self: center;
   }
 }
