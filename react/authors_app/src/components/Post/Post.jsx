@@ -201,7 +201,7 @@ function Comment ({ comment, user, onClick, pending}) {
                 <h4><em>{comment.author.username}</em></h4>
                 <p>{comment.content}</p>
             </div>
-            {(user && user.username === comment.author.username) && <button disabled={pending} onClick={() => onClick(comment.id)}>
+            {(user && user.isAdmin) && <button disabled={pending} onClick={() => onClick(comment.id)}>
                 {!pending ? <Trash size={28}  color="white"/> : <LoaderCircle size={35} color="white" className={styles.icon}/>} </button>}
         </div>
     )
