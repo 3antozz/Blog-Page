@@ -1,5 +1,7 @@
 # Blog Page
 
+Fullstack blog application with CMS for authors.
+
 ## Visitors Index
 
 ![Visitors Index](./react/users_app/public/showcase/index.png)
