@@ -57,14 +57,14 @@ export default function Posts () {
 
 function Post ({post}) {
     return (
-        <section className={styles.post}>
-            <section className={styles.container}>
+        <article className={styles.post}>
+            <div className={styles.container}>
                 <img src={post.cover_url ? post.cover_url : "/istockphoto-1351443977-612x612.jpg"} alt="" />
                 <h2>{post.title}</h2>
                 <p>{post.creationDate} by <em>{post.author.username}</em></p>
                 <Link to={`/posts/${post.id}`}>Read more</Link>
-            </section>
-        </section>
+            </div>
+        </article>
     )
 }
 

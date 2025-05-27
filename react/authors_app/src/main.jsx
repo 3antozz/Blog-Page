@@ -9,6 +9,7 @@ import Post from './components/Post/Post.jsx'
 import Edit from './components/Add-Edit/Edit.jsx'
 import Add from './components/Add-Edit/Add.jsx'
 import { BrowserRouter, Routes, Route } from "react-router";
+import ErrorPage from './components/error/Error.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/posts/edit/:postId' element={<Edit/>}/>
         <Route path='/posts/add' element={<Add/>}/>
       </Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
     </BrowserRouter>
   </StrictMode>,

@@ -112,6 +112,7 @@
   right: 1%;
   animation: fadeOut 2s ease-in-out forwards;
   animation-delay: 6s;
+  z-index: 999;
 }
 
 .exist {
@@ -172,6 +173,7 @@
   right: 1%;
   animation: fadeOut 2s ease-in-out forwards;
   animation-delay: 6s;
+      z-index: 999;
 }
 
 

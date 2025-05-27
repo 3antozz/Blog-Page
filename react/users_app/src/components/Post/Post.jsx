@@ -206,5 +206,5 @@ Comment.propTypes = {
     comment: PropTypes.object.isRequired,
     user: PropTypes.object,
     onClick: PropTypes.func.isRequired,
-    pending: PropTypes.bool.isRequired
+    pending: PropTypes.bool
 }

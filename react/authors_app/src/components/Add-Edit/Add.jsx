@@ -1,7 +1,7 @@
 import styles from "./Edit.module.css"
 import { Editor } from "@tinymce/tinymce-react"
 import { useState, useRef } from "react"
-import { useOutletContext } from "react-router";
+import { useOutletContext} from "react-router";
 const API_URL = import.meta.env.VITE_API_URL;
 export default function Add () {
     const editorRef = useRef(null);
@@ -25,7 +25,10 @@ export default function Add () {
     }
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const content = editorRef.current.getContent();
+        const content = editorRef.current?.getContent() || e.target.content.value;
+        if(!content) {
+            return;
+        }
         try {
             setActionLoading(true);
             const token = localStorage.getItem("cred");
@@ -53,6 +56,14 @@ export default function Add () {
             setSuccess(true);
             setActionLoading(false);
             setFetched(false);
+            setCoverURL("");
+            setTitle("")
+            setPublished(false)
+            if(editorRef.current) {
+                editorRef.current.setContent("")
+            } else {
+                e.target.content.value = ""
+            }
         } catch(err) {
             setSuccess(false)
             setActionLoading(false);
@@ -67,26 +78,24 @@ export default function Add () {
             { success && <li className={styles.success}>Post Added Successfully</li> }
             <div>
                 <label htmlFor="title">Title</label>
-                <input type="text" id="title" onChange={handleTitle} required />
+                <input type="text" id="title" value={titleInput} onChange={handleTitle} required />
             </div>
             <div>
                 <label htmlFor="cover_url">Cover image url</label>
-                <input type="text" id="cover_url" onChange={handleCover} />
+                <input type="text" id="cover_url" value={coverURL} onChange={handleCover} />
             </div>
             <div className={styles.publish}>
                 <label htmlFor="published">Publish post?</label>
                 <input type="checkbox" id="published" onChange={handlePublished} />
                 <button disabled={actionLoading}>{actionLoading ? 'Pending' : 'Create Post'}</button>
             </div>
+            { import.meta.env.VITE_TINY_API_KEY ?
             <Editor
                 apiKey={import.meta.env.VITE_TINY_API_KEY}
                 init={{
                     plugins: [
                     // Core editing features
                     'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-                    // Your account includes a free trial of TinyMCE premium features
-                    // Try the most popular premium features until Feb 10, 2025:
-                    'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
                     ],
                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                     tinycomments_mode: 'embedded',
@@ -101,7 +110,11 @@ export default function Add () {
                 }}
                 onInit={(evt, editor) => editorRef.current = editor}
                 initialValue="Post Content"
-            />
+            /> : <div className={styles.formDiv}>
+                    <label htmlFor="content-textarea"></label>
+                    <textarea name="content" id="content-textarea"></textarea>
+                </div>
+            }
         </form>
     )
 }

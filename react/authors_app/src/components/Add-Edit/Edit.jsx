@@ -1,6 +1,6 @@
 import styles from "./Edit.module.css"
 import { Editor } from "@tinymce/tinymce-react"
-import { useState, useRef, useMemo } from "react"
+import { useState, useRef, useMemo, useEffect } from "react"
 import { useParams, useOutletContext, Link } from "react-router";
 import { LoaderCircle } from "lucide-react";
 const API_URL = import.meta.env.VITE_API_URL;
@@ -11,15 +11,22 @@ export default function Edit () {
     const post = useMemo(() => {
         return posts.filter((elem) => elem.id == postId)[0]
     },[postId, posts])
-    const [titleInput, setTitle] = useState(post ? post.title : "");
-    const [coverURL, setCoverURL] = useState(post ? post.cover_url : "");
-    const [published, setPublished] = useState(post ? post.published : false);
+    const [titleInput, setTitle] = useState("");
+    const [coverURL, setCoverURL] = useState("");
+    const [published, setPublished] = useState(false);
     const [success, setSuccess] = useState(false);
     const [updateError, setError] = useState(null);
     const [actionLoading, setActionLoading] = useState(false);
     const handleTitle = (e) => setTitle(e.target.value);
     const handleCover = (e) => setCoverURL(e.target.value);
     const handlePublished = () => setPublished(!published);
+    useEffect(() => {
+        if(post) {
+            setCoverURL(post.cover_url);
+            setTitle(post.title)
+            setPublished(post.published)
+        }
+    }, [post])
 
     if(!user) {
         return (
@@ -112,9 +119,6 @@ export default function Edit () {
                     plugins: [
                     // Core editing features
                     'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-                    // Your account includes a free trial of TinyMCE premium features
-                    // Try the most popular premium features until Feb 10, 2025:
-                    'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
                     ],
                     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
                     tinycomments_mode: 'embedded',

@@ -8,8 +8,12 @@
 }
 .intro h1, .blog {
     text-align: center;
-    font-size: 2.4rem;
+    font-size: clamp(1.5rem, 3.8vw, 2.3rem);
     margin-bottom: 2rem;
+}
+
+.post h2 {
+    font-size: clamp(1.3rem, 3vw, 1.5rem);
 }
 
 .intro p {
@@ -20,12 +24,22 @@
     width: max(25rem, 50%);
     object-fit: cover;
     order: 2;
+    border-radius: 5px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.container p {
+    margin-bottom: 0.8rem;
 }
 
 .posts {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
-    justify-items: center;
     gap: 1rem;
 }
 
@@ -39,12 +53,7 @@
     padding: 1rem;
     border: 2px solid rgba(96, 96, 241, 0.827);
     border-radius: 15px;
-    max-width: 30rem;
-}
-
-.post a {
-    text-decoration: none;
-    color: white;
+    /* max-width: 25rem; */
 }
 
 .container h2 {
@@ -54,16 +63,17 @@
 }
 
 .post a {
-    margin: auto;
     display: block;
-    width: 40%;
     text-align: center;
+    text-decoration: none;
     background: linear-gradient(135deg, rgb(75, 75, 171), rgb(63, 63, 192));
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
     border-radius: 0.5rem;
+    font-weight: bold;
     border: none;
     color: white;
-    margin-top: 0.5rem;
+    margin-top: auto;
+    align-self: center;
     transition: transform 200ms ease;
 }
 
@@ -113,7 +123,6 @@
     }
     .intro h1, .blog {
         text-align: center;
-        font-size: 1.5rem;
         margin-bottom: 1rem;
     }
     .intro p {
@@ -136,7 +145,6 @@
     }
     .intro h1, .blog {
         text-align: center;
-        font-size: 1.5rem;
         margin-bottom: 1rem;
     }
     .intro p {

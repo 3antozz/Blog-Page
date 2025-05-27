@@ -8,6 +8,7 @@ import Login from './components/Form/Login.jsx'
 import Posts from './components/Posts/Posts.jsx'
 import Post from './components/Post/Post.jsx'
 import { BrowserRouter, Routes, Route } from "react-router";
+import ErrorPage from './components/error/Error.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/sign-up' element={<SignUp/>}/>
           <Route path='/login' element={<Login/>}/>
         </Route>
+        <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>
     </BrowserRouter>
