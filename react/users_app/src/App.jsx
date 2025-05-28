@@ -57,8 +57,6 @@ function App() {
                 } catch (err) {
                     setLoading(false)
                     setError(err.message);
-                    console.log(err)
-
                 }
             };
             fetchPosts();

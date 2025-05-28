@@ -56,7 +56,6 @@ export default function Post () {
             setTimeout(() => {
                 setError("");;
             }, 8000)
-            console.log(err);
         }
     }
     const handleCommentDelete = async (commentId) => {
@@ -89,7 +88,6 @@ export default function Post () {
             }, 8000)
             setDeleteSuccess(false);
             setActionLoading(false);
-            console.log(err);
         }
     }
     useEffect(() => {
@@ -117,7 +115,6 @@ export default function Post () {
                         setError(err);
                         setLoading(false)
                     }
-                    console.log(err)
                 }
             };
             fetchPosts();

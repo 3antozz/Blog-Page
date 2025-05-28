@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useOutletContext, Link } from "react-router"
+import { LoaderCircle } from 'lucide-react';
+
 const API_URL = import.meta.env.VITE_API_URL;
+
 export default function Login () {
     const {setToken, user} = useOutletContext();
     let navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         if (user) {
             return navigate('/');
@@ -20,6 +23,7 @@ export default function Login () {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true)
             const request = await fetch(`${API_URL}/login`, {
                 method: 'post',
                 headers: {
@@ -41,7 +45,8 @@ export default function Login () {
             navigate('/')
         } catch(err) {
             setError(err.message)
-            console.log(err);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -56,7 +61,7 @@ export default function Login () {
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" onChange={handlePassword} value={password} required />
             </div>
-            <button>Log in</button>
+            <button disabled={loading}>{loading ? <LoaderCircle size={33}/> : "Log in"}</button>
             <p>Don&apos;t have an account? <Link to='/sign-up'>Sign up here</Link></p>
         </form>
     )

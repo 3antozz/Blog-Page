@@ -8,6 +8,7 @@ export default function Login () {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -21,6 +22,7 @@ export default function Login () {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true)
             const request = await fetch(`${API_URL}/admin-login`, {
                 method: 'post',
                 headers: {
@@ -42,7 +44,8 @@ export default function Login () {
             navigate('/')
         } catch(err) {
             setError(err.message)
-            console.log(err);
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -57,7 +60,7 @@ export default function Login () {
                 <label htmlFor="password">Password</label>
                 <input type="password" id="password" onChange={handlePassword} value={password} required />
             </div>
-            <button>Log in</button>
+            <button disabled={loading}>{loading ? "Pending" : "Log in"}</button>
         </form>
     )
 }

@@ -77,7 +77,6 @@ function App() {
                 } catch (err) {
                     setError(err.message);
                     setLoading(false)
-                    console.log(err)
                 }
             };
             fetchPosts();

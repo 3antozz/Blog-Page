@@ -68,7 +68,6 @@ export default function Add () {
             setSuccess(false)
             setActionLoading(false);
             setError(err.messages)
-            console.log(err);
         }
     }
       

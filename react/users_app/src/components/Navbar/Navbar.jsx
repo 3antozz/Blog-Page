@@ -1,15 +1,11 @@
 import styles from "./Navbar.module.css"
 import PropTypes from "prop-types"
-import { Link, useNavigate, useLocation } from "react-router"
+import { Link } from "react-router"
 const AUTHORS_URL = import.meta.env.VITE_AUTHORS_URL;
-export default function Navbar ({user, setUser, setToken}) {
-    const navigate = useNavigate();
-    const location = useLocation();
+export default function Navbar ({user}) {
     const handleLogout = () => {
         localStorage.removeItem("cred");
-        setUser(null)
-        setToken(null);
-        navigate(location.pathname);
+        window.location.reload();
     }
     return (
         <nav className={styles.nav}>
@@ -34,6 +30,4 @@ export default function Navbar ({user, setUser, setToken}) {
 
 Navbar.propTypes = {
     user: PropTypes.object,
-    setUser: PropTypes.func.isRequired,
-    setToken: PropTypes.func.isRequired,
 }

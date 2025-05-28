@@ -92,7 +92,6 @@ export default function Edit () {
             setSuccess(false)
             setActionLoading(false);
             setError(err.messages)
-            console.log(err);
         }
     }
       

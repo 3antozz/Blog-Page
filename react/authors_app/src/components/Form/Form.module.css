@@ -45,7 +45,7 @@
 
 .formContainer button:hover {
     filter: brightness(1.25);
-    transform: scale(1.25);
+    transform: scale(1.1);
 }
 
 .formContainer form > div {

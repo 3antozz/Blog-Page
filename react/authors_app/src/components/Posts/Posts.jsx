@@ -39,7 +39,6 @@ export default function Posts () {
             setTimeout(() => {
                 setPublishError("");
             }, 8000)
-            console.log(err);
         }
     }
     const removePost = async (postId) => {
@@ -71,7 +70,6 @@ export default function Posts () {
             setTimeout(() => {
                 setPublishError("");
             }, 8000)
-            console.log(err);
         }
     }
     if(!user) {
