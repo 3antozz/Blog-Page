@@ -18,12 +18,10 @@ Fullstack blog application with CMS for authors.
 
 ![Blog Creation](./react/users_app/public/showcase/create-post.png)
 
-## Features
+# [Live Preview](https://blog-page-3antozz.vercel.app/)
 
-- Authentification via username & password (JWT).
-- Interaction with blogs via comments.
-- Separate Content Management System for authors.
-- Rich text editor for authors.
+> [!NOTE]
+> App is hosted with free tier services, first load might take some time.
 
 ## Why build this project ?
 
@@ -32,7 +30,14 @@ It's a Simple Blog app with a Backend API and 2 separate frontends:
 - First frontend is for normal users, blog visitors.
 - Second frontend is for authors, to create and edit posts and comments.
 > [!NOTE]
-> you need to be an admin to login on this, use the following account: **username: 3antozz, password: 123456**
+> you need to be an admin to login as author, use the following account: **username: 3antozz, password: 123456**
+
+## Features
+
+- Authentification via username & password (JWT).
+- Interaction with blogs via comments.
+- Separate Content Management System for authors.
+- Rich text editor for authors.
 
 
 ## Technologies Used
