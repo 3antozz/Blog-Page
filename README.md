@@ -136,8 +136,9 @@ npm run dev
 
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs) – For securing passwords by hashing and salting.
 - [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) – Implementation of JSON Web Token for signing tokens and authenticating users.
+- [prisma/client](https://www.npmjs.com/package/@prisma/client) – ORM - Auto-generated and type-safe query builder for Node.js.
 - [passport](https://www.npmjs.com/package/passport) – Express-compatible authentication middleware for Node.js.
-- [passport-jws](https://www.npmjs.com/package/@types/passport-jwt) –  Passport strategy for authenticating with a JSON Web Token.
+- [passport-jwt](https://www.npmjs.com/package/@types/passport-jwt) –  Passport strategy for authenticating with a JSON Web Token.
 - [date-fns](https://date-fns.org/docs/Getting-Started) – Used for manipulating JavaScript dates.
 - [express-validator](https://www.npmjs.com/package/express-validator) – User input validation middleware.
 - [express-async-handler](https://www.npmjs.com/package/express-async-handler) – Asynchronous exception-handling middleware.
