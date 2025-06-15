@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://blog-page-3antozz.vercel.app/sitemap.xml

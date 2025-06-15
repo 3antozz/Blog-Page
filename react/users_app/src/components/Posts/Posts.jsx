@@ -25,7 +25,7 @@ export default function Posts () {
         return (
             <>
                 <section className={styles.intro}>
-                    <img src="/closeup-coding-html-programming-screen-laptop-development-web-developer_641010-43297.avif" alt="a laptop" />
+                    <img width={626} height={351} src="/closeup-coding-html-programming-screen-laptop-development-web-developer_641010-43297.avif" alt="a laptop" />
                     <div>
                         <h1>Welcome to my Blog</h1>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi quia odit dolorem recusandae natus quae cumque iusto ab eligendi, blanditiis dolorum nulla, eveniet rerum corrupti fugiat exercitationem deserunt quam non.</p>
@@ -41,7 +41,7 @@ export default function Posts () {
     return (
         <>
             <section className={styles.intro}>
-                <img src="/closeup-coding-html-programming-screen-laptop-development-web-developer_641010-43297.avif" alt="a laptop" />
+                <img width={626} height={351} src="/closeup-coding-html-programming-screen-laptop-development-web-developer_641010-43297.avif" alt="a laptop" />
                 <div>
                     <h1>Welcome to my Blog</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi quia odit dolorem recusandae natus quae cumque iusto ab eligendi, blanditiis dolorum nulla, eveniet rerum corrupti fugiat exercitationem deserunt quam non.</p>
@@ -62,7 +62,7 @@ function Post ({post}) {
                 <img src={post.cover_url ? post.cover_url : "/istockphoto-1351443977-612x612.jpg"} alt="" />
                 <h2>{post.title}</h2>
                 <p>{post.creationDate} by <em>{post.author.username}</em></p>
-                <Link to={`/posts/${post.id}`}>Read more</Link>
+                <Link to={`/posts/${post.id}`}>Read Blog</Link>
             </div>
         </article>
     )
